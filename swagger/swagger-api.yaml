@@ -1,36 +1,54 @@
 tags:
 - name: "post"
-  description: "Test post"
+  description: "Everything about post"
 schemes:
 - "http"
 paths:
-  /post:
-    post:
+  /post?id=$postId:
+    get:
       tags:
       - "post"
-      summary: "포스트 올리기"
-      description: ""
-      consumes:
-      - "application/json"
+      summary: "get full post info by post id"
+      description: "Return full post info"
       produces:
       - "application/json"
       parameters:
-      - in: "body"
-        name: "postInfo"
-        description: "제목이랑 설명 들어가야함"
+      - in: "query"
+        name: "id"
+        description: "post id"
         required: true
-        schema:
-          $ref: "#/definitions/Post"
       responses:
-        405:
-          description: "Invalid input"
         200:
-          description: "Success" 
+          description: "Success"
+          schema:
+            $ref: "#/definitions/fullPostInfo"
+        404:
+          description: "Post not found"
 definitions:
-  Post:
+  fullPostInfo:
     type: "object"
     properties:
-      title:
+      titlePlace:
+        type: "string"
+      titleCompanion:
+        type: "string"
+      titleActivity:
         type: "string"
       description:
+        type: "string"
+      postImageUrls:
+        type: "array"
+        items:
+          type: "string"
+      locationName:
+        type: "string"
+      locationLatitude:
+        type: "number"
+        format: "float"
+      locationLongitude:
+        type: "number"
+        format: "float"
+      writerNickname:
+        type: "string"
+      writerImageUrl:
         type: "string"

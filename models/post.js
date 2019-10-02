@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(45),
       allowNull: false
     }, description: {
-      type: DataTypes.BLOB(2400),
+      type: DataTypes.BLOB,
       allowNull: true
     }
   }, {

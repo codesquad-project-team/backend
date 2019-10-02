@@ -1,0 +1,36 @@
+tags:
+- name: "post"
+  description: "Test post"
+schemes:
+- "http"
+paths:
+  /post:
+    post:
+      tags:
+      - "post"
+      summary: "포스트 올리기"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "postInfo"
+        description: "제목이랑 설명 들어가야함"
+        required: true
+        schema:
+          $ref: "#/definitions/Post"
+      responses:
+        405:
+          description: "Invalid input"
+        200:
+          description: "Success" 
+definitions:
+  Post:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+      description:
+        type: "string"

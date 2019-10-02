@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       unique: true
     },
-    ahtuority: {
+    authority: {
       type: DataTypes.STRING(45),
       allowNull: false,
       defaultValue: 'normal'

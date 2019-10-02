@@ -21,7 +21,7 @@ module.exports = {
         allowNull: false,
         unique: true
       },
-      ahtuority: {
+      authority: {
         type: Sequelize.STRING(45),
         allowNull: false,
         defaultValue: 'normal'

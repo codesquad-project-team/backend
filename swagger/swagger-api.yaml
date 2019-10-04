@@ -24,6 +24,36 @@ paths:
             $ref: "#/definitions/fullPostInfo"
         404:
           description: "Post not found"
+  /post/relatedPosts?id=$postId&page=$pageNumber&eachPage=$eachPage:
+    get:
+      tags:
+      - "post"
+      summary: "get full post info by post id"
+      description: "Return full post info"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "id"
+        description: "post id"
+        required: true
+      - in: "query"
+        name: "page"
+        description: "page Number"
+        required: true
+      - in: "query"
+        name: "eachPage"
+        description: "requested posts number"
+        required: true
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/relatedPost"
+        404:
+          description: "not found"
 definitions:
   fullPostInfo:
     type: "object"
@@ -45,10 +75,25 @@ definitions:
       locationLatitude:
         type: "number"
         format: "float"
+      locationAddress:
+        type: "string"
+      locationPhoneNumber:
+        type: "string"
+      locationLinkAddress:
+        type: "string"
       locationLongitude:
         type: "number"
         format: "float"
       writerNickname:
         type: "string"
       writerImageUrl:
+        type: "string"
+  relatedPost:
+    type: "object"
+    properties:
+      writerImageUrl:
+        type: "string"
+      titleCompanion:
+        type: "string"
+      titleActivity:
         type: "string"

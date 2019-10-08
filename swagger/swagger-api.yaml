@@ -24,26 +24,22 @@ paths:
             $ref: "#/definitions/fullPostInfo"
         404:
           description: "Post not found"
-  /post/relatedPosts?id=$postId&page=$pageNumber&eachPage=$eachPage:
+  /post/related-to?post-id=[post id]&page=[page number]:
     get:
       tags:
       - "post"
-      summary: "get full post info by post id"
-      description: "Return full post info"
+      summary: "get post list related to post id"
+      description: "해당 post id 와 같은 장소인 길이가 최대 20인 Post List 를 리턴한다."
       produces:
       - "application/json"
       parameters:
       - in: "query"
-        name: "id"
+        name: "post-id"
         description: "post id"
         required: true
       - in: "query"
         name: "page"
-        description: "page Number"
-        required: true
-      - in: "query"
-        name: "eachPage"
-        description: "requested posts number"
+        description: "page number"
         required: true
       responses:
         200:
@@ -52,6 +48,11 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/relatedPost"
+        416:
+          description: "Range Not Satisfiable : 해당 page 범위에 post 가 없으면 false 를 return"
+          schema:
+            type: "boolean"
+            example: false
         404:
           description: "not found"
 definitions:
@@ -91,9 +92,11 @@ definitions:
   relatedPost:
     type: "object"
     properties:
-      writerImageUrl:
+      profileImageURL:
         type: "string"
       titleCompanion:
         type: "string"
       titleActivity:
         type: "string"
+      postId:
+        type : "number"

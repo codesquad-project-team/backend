@@ -4,7 +4,7 @@ tags:
 schemes:
 - "http"
 paths:
-  /post?id=$postId:
+  /post?id=[post id]:
     get:
       tags:
       - "post"

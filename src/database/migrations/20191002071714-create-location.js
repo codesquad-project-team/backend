@@ -20,6 +20,18 @@ module.exports = {
       longitude: {
         type : Sequelize.DECIMAL(10,7),
         allowNull : false
+      },
+      address: {
+        type : Sequelize.STRING(100),
+        allowNull : false
+      },
+      link: {
+        type : Sequelize.STRING(255),
+        allowNull : true
+      },
+      phone: {
+        type : Sequelize.STRING(45),
+        allowNull : true
       }
     });
   },

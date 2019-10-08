@@ -8,10 +8,6 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       type: DataTypes.INTEGER,
     },
-    writer: {
-      type: DataTypes.STRING(45),
-      allowNull: false
-    },
     title_place: {
       type: DataTypes.STRING(45),
       allowNull: false

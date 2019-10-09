@@ -43,18 +43,20 @@ paths:
         required: true
       responses:
         200:
-          description: "Success"
+          description: "Ok"
           schema:
             type: "array"
             items:
               $ref: "#/definitions/relatedPost"
-        416:
-          description: "Range Not Satisfiable : 해당 page 범위에 post 가 없으면 false 를 return"
+        204:
+          description: "No Contents.\n해당 장소에 다른 게시글이 없을 때\npage number 가 커서 더이상 글이 없을 때"
           schema:
-            type: "boolean"
-            example: false
+            type: "array"
+            example : []
+        400:
+          description: "Bad Request.\n요청에 post id or page number 가 없을 때"
         404:
-          description: "not found"
+          description: "Not Found.\n존재 하지 않는 post id 일 때"
 definitions:
   fullPostInfo:
     type: "object"

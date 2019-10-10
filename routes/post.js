@@ -27,7 +27,7 @@ router.get('/related-to', (req, res, next) => {
 
   // postid || page number 가 없으면 400에러
   if (!query['post-id'] || !query['page']) {
-    return res.status(400).send('Bad Request');
+    return res.status(400).json('Bad Request');
     // return next(createError(400));
   }
 
@@ -35,7 +35,7 @@ router.get('/related-to', (req, res, next) => {
   const post = posts.getPost(query['post-id']);
   // 존재하지 않는 post id 면 404에러
   if (!post) {
-    return res.status(404).send('Not Found')
+    return res.status(404).json('Not Found')
     // return next(createError(404));
   }
 
@@ -47,12 +47,12 @@ router.get('/related-to', (req, res, next) => {
 
   // 100번 글은 같은 장소 게시글이 없음
   if (!relatedPost.length) {
-    return res.status(204).send("[]");
+    return res.status(204).json([]);
   }
 
   const sendingData = parseData(relatedPost);
 
-  res.send(JSON.stringify(sendingData));
+  res.json(sendingData);
 });
 
 module.exports = router;

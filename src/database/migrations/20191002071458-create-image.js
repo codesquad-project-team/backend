@@ -12,7 +12,17 @@ module.exports = {
       url: {
         type: Sequelize.STRING(255),
         allowNull : false
-      }
+      },
+      post_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'posts'
+          },
+          key: 'id',
+        }
+      },
     });
   },
   down: (queryInterface, Sequelize) => {

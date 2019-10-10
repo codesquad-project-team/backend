@@ -30,6 +30,26 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+      },
+      user_email: {
+        allowNull: false,
+        type: Sequelize.STRING(64),
+        references: {
+          model: {
+            tableName: 'users'
+          },
+          key: 'email',
+        },
+      },
+      location_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'locations'
+          },
+          key: 'id',
+        },
       }
     });
   },

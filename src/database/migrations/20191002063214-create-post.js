@@ -9,10 +9,6 @@ module.exports = {
         unique: true,
         type: Sequelize.INTEGER
       },
-      title_place: {
-        type: Sequelize.STRING(45),
-        allowNull: false
-      },
       title_companion: {
         type: Sequelize.STRING(45),
         allowNull: false

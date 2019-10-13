@@ -26,6 +26,11 @@ module.exports = {
         allowNull: false,
         defaultValue: 'normal'
       }
+    }, {
+      timestamps: true,
+      charset: 'utf8',
+      collate: 'utf8_general_ci',
+      modelName: 'user'
     });
   },
   down: (queryInterface, Sequelize) => {

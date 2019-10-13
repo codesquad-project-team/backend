@@ -32,7 +32,13 @@ module.exports = {
                     key: 'email'
                 }
             }
-        });
+        },
+        {
+            timestamps: true,
+            charset: 'utf8',
+            collate: 'utf8_general_ci',
+            modelName: 'follow'
+          });
     },
 
     down: (queryInterface, Sequelize) => {

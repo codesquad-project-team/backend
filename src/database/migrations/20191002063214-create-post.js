@@ -51,6 +51,11 @@ module.exports = {
           key: 'id',
         },
       }
+    }, {
+      timestamps: true,
+      charset: 'utf8',
+      collate: 'utf8_general_ci',
+      modelName: 'post'
     });
   },
   down: (queryInterface, Sequelize) => {

@@ -33,6 +33,11 @@ module.exports = {
         type : Sequelize.STRING(45),
         allowNull : true
       }
+    }, {
+      timestamps: true,
+      charset: 'utf8',
+      collate: 'utf8_general_ci',
+      modelName: 'location'
     });
   },
   down: (queryInterface, Sequelize) => {

@@ -23,6 +23,11 @@ module.exports = {
           key: 'id',
         }
       },
+    }, {
+      timestamps: true,
+      charset: 'utf8',
+      collate: 'utf8_general_ci',
+      modelName: 'image'
     });
   },
   down: (queryInterface, Sequelize) => {

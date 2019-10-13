@@ -63,7 +63,7 @@ module.exports = {
 
     const imageRecords = [];
     for(let postId = 1; postId <= postRecords.length; postId++) {
-      const numberOfImages = Math.floor(Math.random() * Math.floor(5));
+      const numberOfImages = Math.floor(Math.random() * Math.floor(5)) + 1;
       for(let i = 1; i <= numberOfImages; i++) {
         const url = "https://team-project-s3-bucket.s3.ap-northeast-2.amazonaws.com/post-images/dummy-post-image/myPostImage.png";
         const imageRecord = {

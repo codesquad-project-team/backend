@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const {users, posts} = require('../models/fakeDB');
+const { users, posts } = require('../models/fakeDB');
+const { User, Post, Location, Image } = require('../models');
 
 const getRelatedPost = (postid) => {
   const relatedPost = posts.getRelatedPost(postid);
@@ -53,6 +54,57 @@ router.get('/related-to', (req, res, next) => {
   const sendingData = parseData(relatedPost);
 
   res.json(sendingData);
+});
+
+
+router.get('/', async (req, res, next) => {
+  try {
+    const postId = req.query.id;
+
+    if(postId === undefined) {
+      return res.status(400).send('Post ID is not defined');
+    }
+
+    const post = await Post.findOne({
+                            where: { id: postId }, 
+                            attributes: { exclude: ['id', 'createdAt', 'updatedAt', 'location_id', 'user_email']},
+                            include: [{
+                                        model: User, 
+                                        attributes: ['nickname', 'profile_image']
+                                      },
+                                      {
+                                        model: Location,
+                                        attributes: { exclude: ['id'] }
+                                      },
+                                      {
+                                        model: Image,
+                                        attributes: ['url']
+                                      }]
+                          });
+
+    if(post === null) {
+      return res.status(204).send();
+    }
+
+    const postInfo = {
+      "titlePlace": post.location.name,
+      "titleCompanion": post.title_companion,
+      "titleActivity": post.title_activity,
+      "description": post.description,
+      "postImageUrls": [],
+      "writerNickname": post.user.nickname,
+      "writerImageUrl": post.user.profile_image,
+      "locationLatitude": post.location.latitude,
+      "locationLongitude": post.longitude,
+      "locationAddress": post.location.address,
+      "locationPhoneNumber": post.location.phone,
+      "locationLinkAddress": post.link
+    }
+    post.images.forEach(image => postInfo.postImageUrls.push(image.url));
+    res.json(postInfo);
+  } catch(error) {
+    next(error);
+  }
 });
 
 module.exports = router;

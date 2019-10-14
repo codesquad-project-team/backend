@@ -82,7 +82,7 @@ router.get('/', async (req, res, next) => {
                           });
 
     if(post === null) return next(createError(400));
-
+    
     const postInfo = {
       "titlePlace": post.location.name,
       "titleCompanion": post.title_companion,

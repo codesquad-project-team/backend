@@ -48,12 +48,8 @@ paths:
           description: "Success"
           schema:
               $ref: "#/definitions/fullPostInfo"
-        204:
-          description: "No Contents.\npage number 가 커서 더이상 글이 없을 때"
         400:
-          description: "Bad Request.\n요청에 page number 가 없을 때"
-        404:
-          description: "Post not found"
+          description: "Bad Request.\npost id 가 없거나 해당 post id의 post가 없다."
   /post/related-to?post-id=[post id]&page=[page number]:
     get:
       tags:

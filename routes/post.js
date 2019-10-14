@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const createError = require('http-errors');
 const { users, posts } = require('../models/fakeDB');
 const { User, Post, Location, Image } = require('../models');
 
@@ -61,9 +62,7 @@ router.get('/', async (req, res, next) => {
   try {
     const postId = req.query.id;
 
-    if(postId === undefined) {
-      return res.status(400).send('Post ID is not defined');
-    }
+    if(postId === undefined) return next(createError(400));
 
     const post = await Post.findOne({
                             where: { id: postId }, 
@@ -82,9 +81,7 @@ router.get('/', async (req, res, next) => {
                                       }]
                           });
 
-    if(post === null) {
-      return res.status(204).send();
-    }
+    if(post === null) return next(createError(400));
 
     const postInfo = {
       "titlePlace": post.location.name,
@@ -103,7 +100,7 @@ router.get('/', async (req, res, next) => {
     post.images.forEach(image => postInfo.postImageUrls.push(image.url));
     res.json(postInfo);
   } catch(error) {
-    next(error);
+    return next(error);
   }
 });
 

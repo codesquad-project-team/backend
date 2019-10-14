@@ -92,13 +92,13 @@ router.get('/', async (req, res, next) => {
       "titleActivity": post.title_activity,
       "description": post.description,
       "postImageUrls": [],
+      "writerNickname": post.user.nickname,
+      "writerImageUrl": post.user.profile_image,
       "locationLatitude": post.location.latitude,
+      "locationLongitude": post.longitude,
       "locationAddress": post.location.address,
       "locationPhoneNumber": post.location.phone,
-      "locationLinkAddress": post.link,
-      "locationLongitude": post.longitude,
-      "writerNickname": post.user.nickname,
-      "writerImageUrl": post.user.profile_image
+      "locationLinkAddress": post.link
     }
     post.images.forEach(image => postInfo.postImageUrls.push(image.url));
     res.json(postInfo);

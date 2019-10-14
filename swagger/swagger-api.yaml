@@ -25,9 +25,6 @@ paths:
               $ref: "#definitions/postThumbnailInfo"
         204:
           description: "No Contents.\npage number 가 커서 더이상 글이 없을 때"
-          schema:
-            type: "array"
-            example : []
         400:
           description: "Bad Request.\n요청에 page number 가 없을 때"
         500:
@@ -51,6 +48,10 @@ paths:
           description: "Success"
           schema:
               $ref: "#/definitions/fullPostInfo"
+        204:
+          description: "No Contents.\npage number 가 커서 더이상 글이 없을 때"
+        400:
+          description: "Bad Request.\n요청에 page number 가 없을 때"
         404:
           description: "Post not found"
   /post/related-to?post-id=[post id]&page=[page number]:
@@ -79,9 +80,6 @@ paths:
               $ref: "#/definitions/relatedPost"
         204:
           description: "No Contents.\n해당 장소에 다른 게시글이 없을 때\npage number 가 커서 더이상 글이 없을 때"
-          schema:
-            type: "array"
-            example : []
         400:
           description: "Bad Request.\n요청에 post id or page number 가 없을 때"
         404:
@@ -102,9 +100,14 @@ definitions:
         type: "array"
         items:
           type: "string"
-      locationName:
+      writerNickname:
+        type: "string"
+      writerImageUrl:
         type: "string"
       locationLatitude:
+        type: "number"
+        format: "float"
+      locationLongitude:
         type: "number"
         format: "float"
       locationAddress:
@@ -112,13 +115,6 @@ definitions:
       locationPhoneNumber:
         type: "string"
       locationLinkAddress:
-        type: "string"
-      locationLongitude:
-        type: "number"
-        format: "float"
-      writerNickname:
-        type: "string"
-      writerImageUrl:
         type: "string"
   relatedPost:
     type: "object"

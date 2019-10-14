@@ -14,22 +14,22 @@ module.exports = {
             },
             follower_email: {
                 allowNull: false,
-                type: Sequelize.STRING(64),
+                type: Sequelize.INTEGER,
                 references: {
                     model: {
                         tableName: 'users'
                     },
-                    key: 'email',
+                    key: 'id',
                 }
             },
             following_email: {
                 allowNull: false,
-                type: Sequelize.STRING(64),
+                type: Sequelize.INTEGER,
                 references: {
                     model: {
                         tableName: 'users'
                     },
-                    key: 'email'
+                    key: 'id'
                 }
             }
         },

@@ -6,9 +6,10 @@ module.exports = {
     for(let i = 0; i <= 20; i++) {
       const userRecord = {
         email: 'gmini.y' + i + '@gmail.com',
+        phone: `${i}-1234-1234`,
         profile_image: 'https://team-project-s3-bucket.s3.ap-northeast-2.amazonaws.com/profile-images/dummyUser%40google.com/myProfile.png',
-        password: 'PaSsWoRd',
-        nickname: '잉글비' + i
+        nickname: '잉글비' + i,
+        description: '나는 바보 닙니다'
       };
       userRecords.push(userRecord);
     }

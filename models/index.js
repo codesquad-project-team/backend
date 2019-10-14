@@ -20,10 +20,10 @@ db.Image.belongsTo(db.Post, {foreignKey : 'post_id' , targetKey : 'id'});
 db.Location.hasMany(db.Post, {foreignKey : 'location_id' , sourceKey : 'id'});
 db.Post.belongsTo(db.Location, {foreignKey : 'location_id' , targetKey : 'id'});
 
-db.User.hasMany(db.Post, {foreignKey : {name: 'user_email', allowNull: false}, sourceKey : 'email'});
-db.Post.belongsTo(db.User, {foreignKey : 'user_email' , targetKey : 'email'});
+db.User.hasMany(db.Post, {foreignKey : {name: 'user_id', allowNull: false}, sourceKey : 'id'});
+db.Post.belongsTo(db.User, {foreignKey : 'user_id' , targetKey : 'id'});
 
-db.User.belongsToMany(db.User, {as : 'followers', foreignKey : 'follower_email', through : 'follow'});
-db.User.belongsToMany(db.User, {as : 'followings', foreignKey : 'follwing_email', through : 'follow'});
+db.User.belongsToMany(db.User, {as : 'followers', foreignKey : 'follower_id', through : 'follow'});
+db.User.belongsToMany(db.User, {as : 'followings', foreignKey : 'follwing_id', through : 'follow'});
 
 module.exports = db;

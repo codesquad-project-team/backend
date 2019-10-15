@@ -3,8 +3,9 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const userRecords = [];
-    for(let i = 0; i <= 20; i++) {
+    for(let i = 1; i <= 21; i++) {
       const userRecord = {
+        id: i,
         email: 'gmini.y' + i + '@gmail.com',
         phone: `${i}-1234-1234`,
         profile_image: 'https://team-project-s3-bucket.s3.ap-northeast-2.amazonaws.com/profile-images/dummyUser%40google.com/myProfile.png',
@@ -54,7 +55,7 @@ module.exports = {
           description: '테스트입니다.',
           createdAt: new Date(),
           updatedAt: new Date(),
-          user_email: userRecord.email,
+          writer_id: userRecord.id,
           location_id: locationId
         }
         postRecords.push(postRecord);
@@ -69,7 +70,8 @@ module.exports = {
         const url = "https://team-project-s3-bucket.s3.ap-northeast-2.amazonaws.com/post-images/dummy-post-image/myPostImage.png";
         const imageRecord = {
                             url,
-                            post_id: postId
+                            post_id: postId,
+                            is_representative: (i === 1)
                           };
         imageRecords.push(imageRecord);
       }

@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     title_activity: {
       type: DataTypes.STRING(45),
       allowNull: false
-    }, description: {
+    },
+    description: {
       type: DataTypes.BLOB,
       allowNull: true
     }

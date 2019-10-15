@@ -23,6 +23,11 @@ module.exports = {
           key: 'id',
         }
       },
+      is_representative: {
+        type : Sequelize.Boolean,
+        default: false,
+        allowNull : false
+      }
     }, {
       timestamps: true,
       charset: 'utf8',

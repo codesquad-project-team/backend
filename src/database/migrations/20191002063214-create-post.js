@@ -31,14 +31,14 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
       },
-      user_email: {
+      writer_id: {
         allowNull: false,
         type: Sequelize.STRING(64),
         references: {
           model: {
             tableName: 'users'
           },
-          key: 'email',
+          key: 'id',
         },
       },
       location_id: {

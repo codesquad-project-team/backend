@@ -11,7 +11,12 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       unique: true,
       type: DataTypes.INTEGER
-    }
+    },
+    is_representative: {
+      type : DataTypes.BOOLEAN,
+      default: false,
+      allowNull : false
+    },
   }, {
     timestamps: false,
     charset: 'utf8',

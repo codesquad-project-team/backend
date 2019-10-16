@@ -11,7 +11,7 @@ class Paginator {
         include = include || [];
         order = order || [];
         const offset = (page - 1) * this.perPage;
-        const limit = offset + this.perPage;
+        const limit = this.perPage;
         const data = await this.model.findAndCountAll({
                                             offset,
                                             limit,

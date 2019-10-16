@@ -3,6 +3,7 @@ const router = express.Router();
 const createError = require('http-errors');
 const { users, posts } = require('../models/fakeDB');
 const { User, Post, Location, Image } = require('../models');
+const Paginator = require('../src/paginatior');
 
 const getRelatedPost = (postid) => {
   const relatedPost = posts.getRelatedPost(postid);
@@ -22,6 +23,22 @@ const parseData = (relatedPost) => {
     })
   }
   return parsedData;
+}
+
+const parsePaginatedData = (paginatedData) => {
+  return paginatedData.rows.reduce((accumulator, currentValue) => {
+    accumulator.posts.push({
+      postId: currentValue.id,
+      writerImageUrl: currentValue.user.profile_image,
+      writerNickname: currentValue.user.nickname,
+      representativePostImage: currentValue.images[0].url,
+      titlePlace: currentValue.location.name,
+      titleCompanion: currentValue.title_companion,
+      titleActivity: currentValue.title_activity,
+      description: currentValue.description
+    });
+    return accumulator;
+  }, {hasNextPage: paginatedData.hasNextPage, posts: []});  
 }
 
 router.get('/related-to', (req, res, next) => {
@@ -57,10 +74,43 @@ router.get('/related-to', (req, res, next) => {
   res.json(sendingData);
 });
 
-
 router.get('/', async (req, res, next) => {
   try {
-    const postId = req.query.id;
+    const page = req.query.page;
+    const perPage = 20;
+
+    if(!page || page === 0) next(createError(400, 'page number must be defined minimum 1'));
+
+    const paginator = new Paginator({ model: Post, perPage });
+    const postAttributes = ['id', 'description', 'title_companion', 'title_activity'];
+    const include = [{
+                      model: User,
+                      attributes: ['profile_image', 'nickname']
+                    }, {
+                      model: Location,
+                      attributes: ['name']
+                    }, {
+                      model: Image,
+                      where: { is_representative: true },
+                      attributes: ['url']
+                    }];
+    const order = ['id'];
+
+    const paginatedData = await paginator.paginate({ page, attributes: postAttributes, include, order });
+
+    if(paginatedData.rows.length === 0) return res.status(204).send();
+    
+    const sendingData = parsePaginatedData(paginatedData);
+
+    return res.json(sendingData);
+  } catch(error) {
+    return next(error);    
+  }
+});
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const postId = req.params.id;
 
     if(postId === undefined) return next(createError(400));
 

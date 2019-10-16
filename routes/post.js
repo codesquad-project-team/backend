@@ -58,9 +58,9 @@ router.get('/related-to', (req, res, next) => {
 });
 
 
-router.get('/', async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
-    const postId = req.query.id;
+    const postId = req.params.id;
 
     if(postId === undefined) return next(createError(400));
 

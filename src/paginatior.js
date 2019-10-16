@@ -1,23 +1,25 @@
 class Paginator {
-    constructor({ model, resPerPage }) {
-        if(!(model && resPerPage)) throw new Error('model, resPerPage must be defined');
+    constructor({ model, perPage }) {
+        if(!(model && perPage)) throw new Error('model, resPerPage must be defined');
         this.model = model;
-        this.resPerPage = resPerPage;
+        this.perPage = perPage;
     }
 
-    async paginate({ page, attributes, include } ) {
-        if(!page) throw new Error('page is not defined');
+    async paginate({ page, attributes, include, order } ) {
+        if(!page && page === 0) throw new Error('page number must be defined minimum 1');
         attributes = attributes || [];
         include = include || [];
-        const offset = page * this.resPerPage;
-        const limit = offset + this.resPerPage;
+        order = order || [];
+        const offset = (page - 1) * this.perPage;
+        const limit = offset + this.perPage;
         const data = await this.model.findAndCountAll({
                                             offset,
                                             limit,
                                             attributes,
-                                            include
+                                            include,
+                                            order
                                         });
-        const hasNextPage = Math.ceil(data.count/this.resPerPage) > this.page;
+        const hasNextPage = Math.ceil(data.count/this.perPage) > page;
         const result = {
             rows: data.rows,
             hasNextPage

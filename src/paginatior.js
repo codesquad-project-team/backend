@@ -6,7 +6,7 @@ class Paginator {
     }
 
     async paginate({ page, attributes, include, order } ) {
-        if(!page && page === 0) throw new Error('page number must be defined minimum 1');
+        if(!page || page === 0) throw new Error('page number must be defined minimum 1');
         attributes = attributes || [];
         include = include || [];
         order = order || [];

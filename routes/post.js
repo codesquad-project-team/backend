@@ -25,6 +25,22 @@ const parseData = (relatedPost) => {
   return parsedData;
 }
 
+const parsePaginatedData = (paginatedData) => {
+  return paginatedData.rows.reduce((accumulator, currentValue) => {
+    accumulator.posts.push({
+      postId: currentValue.id,
+      writerImageUrl: currentValue.user.profile_image,
+      writerNickname: currentValue.user.nickname,
+      representativePostImage: currentValue.images[0].url,
+      titlePlace: currentValue.location.name,
+      titleCompanion: currentValue.title_companion,
+      titleActivity: currentValue.title_activity,
+      description: currentValue.description
+    });
+    return accumulator;
+  }, {hasNextPage: paginatedData.hasNextPage, posts: []});  
+}
+
 router.get('/related-to', (req, res, next) => {
   const query = req.query;
 
@@ -63,7 +79,7 @@ router.get('/', async (req, res, next) => {
     const page = req.query.page;
     const perPage = 20;
 
-    if(!page && page === 0) next(createError(400, 'page number must be defined minimum 1'));
+    if(!page || page === 0) next(createError(400, 'page number must be defined minimum 1'));
 
     const paginator = new Paginator({ model: Post, perPage });
     const postAttributes = ['id', 'description', 'title_companion', 'title_activity'];
@@ -84,31 +100,13 @@ router.get('/', async (req, res, next) => {
 
     if(paginatedData.rows.length === 0) return res.status(204).send();
     
-    const parsedData = paginatedData.rows.reduce((accumulator, currentValue) => {
-      accumulator.push({
-        postId: currentValue.id,
-        writerImageUrl: currentValue.user.profile_image,
-        writerNickname: currentValue.user.nickname,
-        representativePostImage: currentValue.images[0].url,
-        titlePlace: currentValue.location.name,
-        titleCompanion: currentValue.title_companion,
-        titleActivity: currentValue.title_activity,
-        description: currentValue.description
-      });
-      return accumulator;
-    }, [])
+    const sendingData = parsePaginatedData(paginatedData);
 
-    const result = {
-      hasNextPage: paginatedData.hasNextPage,
-      posts: parsedData
-    }
-
-    return res.json(result);
+    return res.json(sendingData);
   } catch(error) {
     return next(error);    
   }
 });
-
 
 router.get('/:id', async (req, res, next) => {
   try {

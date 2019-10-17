@@ -7,7 +7,7 @@ const sequelize = require('./models').sequelize;
 const cors = require('cors');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
 
 const app = express();
@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/user', userRouter);
 app.use('/post', postRouter);
 
 // catch 404 and forward to error handler

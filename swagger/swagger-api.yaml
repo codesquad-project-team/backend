@@ -1,9 +1,40 @@
 tags:
 - name: "post"
   description: "Everything about post"
+- name: "user"
+  description: "Everything about user"  
 schemes:
 - "http"
 paths:
+  /user/info:
+    get:
+      tags:
+      - "user"
+      summary: "user 정보 보내기"
+      prodeces:
+      - "application/json"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "object"
+            properties:
+              id:
+                type: "number"
+              profileImage:
+                type: "string"
+              email:
+                type: "string"
+              phone:
+                type: "string"
+              nickname:
+                type: "string"
+              description:
+                type: "string"
+        400:
+          description: "Bad Request. JWT 가 유요하지 않음"
+        500:
+          description: "Internal Server Error"
   /post?page={page number}:
     get:
       tags:

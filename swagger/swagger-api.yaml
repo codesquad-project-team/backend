@@ -129,13 +129,13 @@ definitions:
         type: "string"
       description:
         type: "string"
-      postImageUrls:
+      postImageURLs:
         type: "array"
         items:
           type: "string"
       writerNickname:
         type: "string"
-      writerImageUrl:
+      writerImageURL:
         type: "string"
       locationLatitude:
         type: "number"

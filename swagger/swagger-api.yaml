@@ -112,9 +112,9 @@ paths:
             items:
               $ref: "#/definitions/relatedPost"
         204:
-          description: "No Contents.\n해당 장소에 다른 게시글이 없을 때\npage number 가 커서 더이상 글이 없을 때"
+          description: "No Contents.\n해당 장소에 다른 게시글이 없을 때\npage number 가 커서 더이상 글이 없을 때\n존재 하지 않는 post id 일 때"
         400:
-          description: "Bad Request.\n요청에 post id or page number 가 없을 때\n존재 하지 않는 post id 일 때"
+          description: "Bad Request.\n요청에 post id or page number 가 없을 때"
 definitions:
   fullPostInfo:
     type: "object"

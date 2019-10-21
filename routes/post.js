@@ -29,9 +29,9 @@ const parsePaginatedData = (paginatedData) => {
   return paginatedData.rows.reduce((accumulator, currentValue) => {
     accumulator.posts.push({
       postId: currentValue.id,
-      writerImageUrl: currentValue.user.profile_image,
+      writerImageURL: currentValue.user.profile_image,
       writerNickname: currentValue.user.nickname,
-      representativePostImage: currentValue.images[0].url,
+      representativePostImageURL: currentValue.images[0].url,
       titlePlace: currentValue.location.name,
       titleCompanion: currentValue.title_companion,
       titleActivity: currentValue.title_activity,
@@ -138,16 +138,16 @@ router.get('/:id', async (req, res, next) => {
       "titleCompanion": post.title_companion,
       "titleActivity": post.title_activity,
       "description": post.description,
-      "postImageUrls": [],
+      "postImageURLs": [],
       "writerNickname": post.user.nickname,
-      "writerImageUrl": post.user.profile_image,
-      "locationLatitude": post.location.latitude,
-      "locationLongitude": post.longitude,
+      "writerImageURL": post.user.profile_image,
+      "locationLatitude": parseFloat(post.location.latitude),
+      "locationLongitude": parseFloat(post.location.longitude),
       "locationAddress": post.location.address,
       "locationPhoneNumber": post.location.phone,
       "locationLinkAddress": post.link
     }
-    post.images.forEach(image => postInfo.postImageUrls.push(image.url));
+    post.images.forEach(image => postInfo.postImageURLs.push(image.url));
     res.json(postInfo);
   } catch(error) {
     return next(error);

@@ -24,7 +24,7 @@ module.exports = {
         }
       },
       is_representative: {
-        type : Sequelize.Boolean,
+        type : Sequelize.BOOLEAN,
         default: false,
         allowNull : false
       }

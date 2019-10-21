@@ -33,7 +33,7 @@ module.exports = {
       },
       writer_id: {
         allowNull: false,
-        type: Sequelize.STRING(64),
+        type: Sequelize.INTEGER,
         references: {
           model: {
             tableName: 'users'

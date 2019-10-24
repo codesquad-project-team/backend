@@ -5,30 +5,29 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sequelize = require('./models').sequelize;
 const cors = require('cors');
-
-const indexRouter = require('./routes/index');
-const userRouter = require('./routes/user');
-const postRouter = require('./routes/post');
-
 const app = express();
+
+const controllers = {
+  v1: require('./controllers')
+}
+
+const models = {
+  v1: require('./models')
+}
+
+const apiRouters = {
+  v1: require('./routes/apiv1')(models.v1, controllers.v1)
+}
+
 sequelize.sync();
-
-
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./swagger/swagger-definition');
 
 app.use(logger('dev'));
 app.use(cors());
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use('/', indexRouter);
-app.use('/user', userRouter);
-app.use('/post', postRouter);
+app.use('/apiv1', apiRouters.v1);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

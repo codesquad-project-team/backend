@@ -2,7 +2,7 @@ tags:
 - name: "post"
   description: "Everything about post"
 - name: "user"
-  description: "Everything about user"  
+  description: "Everything about user"
 schemes:
 - "http"
 paths:

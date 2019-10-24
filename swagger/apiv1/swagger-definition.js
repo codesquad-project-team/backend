@@ -9,8 +9,8 @@ const swaggerDefinition = {
     version: '1.0.0', // Version (required)
     description: 'API description', // Description (optional)
   },
-  host: 'localhost:3000', // Host (optional)
-  basePath: '/', // Base path (optional)
+  host: 'temp', // Host (optional)
+  basePath: '/apiv1', // Base path (optional)
 }
 
 // Options for the swagger docs
@@ -18,7 +18,7 @@ const options = {
   // Import swaggerDefinitions
   swaggerDefinition: swaggerDefinition,
   // Path to the API docs
-  apis: ['./swagger/*.yaml'],
+  apis: ['./swagger/apiv1/*.yaml'],
 }
 
 // Initialize swagger-jsdoc -> returns validated swagger spec in json format

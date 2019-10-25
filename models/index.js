@@ -24,6 +24,6 @@ db.User.hasMany(db.Post, {foreignKey : {name: 'writer_id', allowNull: false}, so
 db.Post.belongsTo(db.User, {foreignKey : 'writer_id' , targetKey : 'id'});
 
 db.User.belongsToMany(db.User, {as : 'followers', foreignKey : 'follower_id', through : 'follow'});
-db.User.belongsToMany(db.User, {as : 'followings', foreignKey : 'follwing_id', through : 'follow'});
+db.User.belongsToMany(db.User, {as : 'followings', foreignKey : 'following_id', through : 'follow'});
 
 module.exports = db;

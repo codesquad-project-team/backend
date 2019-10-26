@@ -9,13 +9,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING(64),
-      allowNull: true,
-      unique: true
+      allowNull: true
     },
     phone: {
       type: DataTypes.STRING(64),
-      allowNull: true,
-      unique: true
+      allowNull: true
     },
     profile_image: {
       type: DataTypes.STRING(255),
@@ -23,8 +21,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     nickname: {
       type: DataTypes.STRING(45),
-      allowNull: false,
+      allowNull: true,
       unique: true
+    },
+    provider: {
+      type: DataTypes.STRING(45),
+      allowNull: false
+    },
+    provided_id: {
+      type: DataTypes.STRING(64),
+      allowNull: false
     },
     description: {
       type: DataTypes.BLOB,

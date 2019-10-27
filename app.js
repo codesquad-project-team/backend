@@ -6,13 +6,20 @@ const logger = require('morgan');
 const sequelize = require('./models').sequelize;
 const cors = require('cors');
 const app = express();
+require('dotenv').config();
+app.set('jwtSecret', process.env.JWT_SECRET);
 
-const controllers = {
-  v1: require('./controllers')
-}
+const passport = require('passport');
+const passportConfig = require('./passport');
+
+const {decodeToken, registerNickname} = require('./middlewares');
 
 const models = {
   v1: require('./models')
+}
+
+const controllers = {
+  v1: require('./controllers')(models.v1)
 }
 
 const apiRouters = {
@@ -27,6 +34,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(passport.initialize());
+passportConfig(passport, controllers.v1);
+
+app.use(decodeToken)
+app.use(registerNickname)
+
 app.use('/apiv1', apiRouters.v1);
 
 // catch 404 and forward to error handler

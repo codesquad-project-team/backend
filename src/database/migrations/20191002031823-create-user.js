@@ -11,13 +11,11 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING(64),
-        allowNull: true,
-        unique: true
+        allowNull: true
       },
       phone: {
         type: Sequelize.STRING(64),
-        allowNull: true,
-        unique: true
+        allowNull: true
       },
       profile_image: {
         type: Sequelize.STRING(255),
@@ -25,8 +23,16 @@ module.exports = {
       },
       nickname: {
         type: Sequelize.STRING(45),
-        allowNull: false,
+        allowNull: true,
         unique: true
+      },
+      provider: {
+        type: Sequelize.STRING(45),
+        allowNull: false
+      },
+      provided_id: {
+        type: Sequelize.STRING(64),
+        allowNull: false
       },
       description: {
         type: Sequelize.BLOB,

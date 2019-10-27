@@ -1,10 +1,11 @@
 const FacebookStrategy = require('passport-facebook').Strategy;
+require('dotenv').config();
 
 module.exports = (passport, controllers) => {
 
   passport.use(new FacebookStrategy({
-    clientID: '536780433788383',
-    clientSecret: '3a7e607f84dbca848549226b6105662f',
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     callbackURL: "/apiv1/auth/facebook/callback",
     profileFields: ['id', 'emails', 'name']
   },

@@ -1,5 +1,5 @@
 'use strict';
-
+const provider = ['facebook', 'kakao', 'instagram']
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const userRecords = [];
@@ -10,7 +10,9 @@ module.exports = {
         phone: `${i}-1234-1234`,
         profile_image: 'https://team-project-s3-bucket.s3.ap-northeast-2.amazonaws.com/profile-images/dummyUser%40google.com/myProfile.png',
         nickname: '잉글비' + i,
-        description: '나는 바보 닙니다'
+        description: '나는 바보 닙니다',
+        provider: `${provider[i%3]}`,
+        provided_id: `${i*11}`
       };
       userRecords.push(userRecord);
     }

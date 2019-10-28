@@ -12,7 +12,7 @@ module.exports = {
                 type: Sequelize.DATE,
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
             },
-            follower_email: {
+            follower_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: {
@@ -22,7 +22,7 @@ module.exports = {
                     key: 'id',
                 }
             },
-            following_email: {
+            following_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: {

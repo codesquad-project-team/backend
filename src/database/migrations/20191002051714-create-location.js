@@ -29,6 +29,10 @@ module.exports = {
         type : Sequelize.STRING(255),
         allowNull : true
       },
+      external_link: {
+        type : Sequelize.STRING(255),
+        allowNull : true
+      },
       phone: {
         type : Sequelize.STRING(45),
         allowNull : true

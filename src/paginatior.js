@@ -5,17 +5,19 @@ class Paginator {
         this.perPage = perPage;
     }
 
-    async paginate({ page, attributes, include, order } ) {
+    async paginate({ page, attributes, where, include, order } ) {
         if(!page || page === 0) throw new Error('page number must be defined minimum 1');
         attributes = attributes || [];
         include = include || [];
         order = order || [];
+        where = where || {};
         const offset = (page - 1) * this.perPage;
         const limit = this.perPage;
         const data = await this.model.findAndCountAll({
                                             offset,
                                             limit,
                                             attributes,
+                                            where,
                                             include,
                                             order
                                         });
@@ -25,7 +27,7 @@ class Paginator {
             hasNextPage
         }
 
-        return result
+        return result;
     }
 }
 

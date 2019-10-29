@@ -1,15 +1,14 @@
 module.exports = {
-    parseRelatedData: (relatedPost) => {
-        const parsedData = [];
-        for (let i = 0; i < relatedPost.length; i++) {
-            parsedData.push({
-                profileImageURL: relatedPost[i].dataValues.user.profile_image,
-                titleCompanion: relatedPost[i].dataValues.title_companion,
-                titleActivity: relatedPost[i].dataValues.title_activity,
-                postId: relatedPost[i].dataValues.id
+    parseRelatedData: (paginatedData) => {
+        return paginatedData.rows.reduce((accumulator, currentValue) => {
+            accumulator.posts.push({
+                profileImageURL: currentValue.user.profile_image,
+                titleCompanion: currentValue.title_companion,
+                titleActivity: currentValue.title_activity,
+                postId: currentValue.id,
             });
-        }
-        return parsedData;
+            return accumulator;
+        }, {hasNextPage: paginatedData.hasNextPage, posts: [] });
     },
     
     parsePaginatedData: (paginatedData) => {

@@ -104,7 +104,8 @@ module.exports = (models, controller) => {
         "locationLongitude": parseFloat(post.location.longitude),
         "locationAddress": post.location.address,
         "locationPhoneNumber": post.location.phone,
-        "locationLinkAddress": post.location.link
+        "locationLinkAddress": post.location.link,
+        "locationExternalLink": post.location.external_link
       }
       post.images.forEach(image => postInfo.postImageURLs.push(image.url));
       res.json(postInfo);

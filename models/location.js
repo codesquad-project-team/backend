@@ -21,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       type : DataTypes.STRING(255),
       allowNull : true
     },
+    external_link: {
+      type : DataTypes.STRING(255),
+      allowNull : true
+    },
     phone: {
       type : DataTypes.STRING(45),
       allowNull : true

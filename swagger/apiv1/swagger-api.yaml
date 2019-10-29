@@ -152,6 +152,8 @@ definitions:
         type: "string"
       locationLinkAddress:
         type: "string"
+      locationExternalLink:
+        type: "string"
   relatedPost:
     type: "object"
     properties:

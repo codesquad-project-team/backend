@@ -39,7 +39,7 @@ paths:
     get:
       tags:
       - "post"
-      summary: "각 페이지당 최대 8개의 랜덤 포스트를 전달한다."
+      summary: "각 페이지당 최대 20개의 포스트를 전달한다."
       prodeces:
       - "application/json"
       parameters:
@@ -87,7 +87,7 @@ paths:
           description: "Bad Request.\npost id가 없다."
         404:
           description: "Not found.\n해당 post id의 post가 없다."
-  /post/related-to?post-id={post id}&page={page number}:
+  /post/related-to?postid={post id}&page={page number}:
     get:
       tags:
       - "post"
@@ -108,9 +108,14 @@ paths:
         200:
           description: "Ok"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/relatedPost"
+            type: "object"
+            properties:
+              hasNextPage:
+                type: "boolean"
+              posts:
+                type: "array"
+                items:
+                  $ref: "#/definitions/relatedPost"
         204:
           description: "No Contents.\n해당 장소에 다른 게시글이 없을 때\npage number 가 커서 더이상 글이 없을 때\n존재 하지 않는 post id 일 때"
         400:

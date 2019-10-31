@@ -41,7 +41,7 @@ passportConfig(passport, controllers.v1);
 app.use(decodeToken)
 app.use(registerNickname)
 
-app.use('/apiv1', apiRouters.v1);
+app.use('/v1', apiRouters.v1);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

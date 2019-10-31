@@ -43,6 +43,10 @@ module.exports = (models, controller) => {
       if(!page || page === 0) next(createError(400, 'page number must be defined minimum 1'));
   
       const paginator = new Paginator({ model: Post, perPage });
+      const where = {};
+      if(req.query.writerid) {
+        where.writer_id = req.query.writerid;
+      }
       const postAttributes = ['id', 'description', 'title_companion', 'title_activity'];
       const include = [{
                         model: User,
@@ -57,7 +61,7 @@ module.exports = (models, controller) => {
                       }];
       const order = ['id'];
   
-      const paginatedData = await paginator.paginate({ page, attributes: postAttributes, include, order });
+      const paginatedData = await paginator.paginate({ page, attributes: postAttributes, include, order, where });
   
       if(paginatedData.rows.length === 0) return res.status(204).send();
       

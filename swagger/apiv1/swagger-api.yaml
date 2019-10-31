@@ -6,7 +6,7 @@ tags:
 schemes:
 - "http"
 paths:
-  /user/info:
+  /user/myinfo:
     get:
       tags:
       - "user"
@@ -35,7 +35,28 @@ paths:
           description: "Bad Request. JWT 가 유요하지 않음"
         500:
           description: "Internal Server Error"
-  /post?page={page number}:
+  /user/profile-content?id={user id}:
+    get:
+      tags:
+      - "user"
+      summary: "user의 개인 페이지에서 보여질 profile content info"
+      prodeces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "id"
+        description: "가져오고자 하는 유저의 id"
+        required: true
+      responses:
+        200:
+          description: "Success"
+          schema:
+              $ref: "#definitions/profileContent"
+        400:
+          description: "Bad Request\n id 를 가진 user가 없음"
+        500:
+          description: "Internal Server Error"
+  /post?page={page number}&writerid={writer id}:
     get:
       tags:
       - "post"
@@ -47,6 +68,10 @@ paths:
         name: "page"
         description: "page number minimum 1"
         required: true
+      - in: "query"
+        name: "writer id"
+        description: "특정 유저가 작성한 Post 만 가져오고 싶을 때 writer id 를 입력"
+        required: false
       responses:
         200:
           description: "Success"
@@ -82,7 +107,7 @@ paths:
         200:
           description: "Success"
           schema:
-              $ref: "#/definitions/fullPostInfo"
+            $ref: "#/definitions/fullPostInfo"
         400:
           description: "Bad Request.\npost id가 없다."
         404:
@@ -183,4 +208,21 @@ definitions:
       titleActivity:
         type: "string"
       description:
+        type: "string"
+  profileContent:
+    type: "object"
+    properties:
+      isMyProfile:
+        type: "boolean"
+      nickname:
+        type: "string"
+      totalPost:
+        type: "number"
+      totalFollower:
+        type: "number"
+      totalFollowing:
+        type: "number"
+      introduction:
+        type: "string"
+      profileImage:
         type: "string"

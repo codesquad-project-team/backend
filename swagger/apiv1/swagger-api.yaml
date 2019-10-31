@@ -56,7 +56,7 @@ paths:
           description: "Bad Request\n id 를 가진 user가 없음"
         500:
           description: "Internal Server Error"
-  /post?page={page number}:
+  /post?page={page number}&writerid={writer id}:
     get:
       tags:
       - "post"
@@ -68,6 +68,10 @@ paths:
         name: "page"
         description: "page number minimum 1"
         required: true
+      - in: "query"
+        name: "writer id"
+        description: "특정 유저가 작성한 Post 만 가져오고 싶을 때 writer id 를 입력"
+        required: false
       responses:
         200:
           description: "Success"

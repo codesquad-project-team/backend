@@ -6,7 +6,7 @@ tags:
 schemes:
 - "http"
 paths:
-  /user/info:
+  /user/myinfo:
     get:
       tags:
       - "user"

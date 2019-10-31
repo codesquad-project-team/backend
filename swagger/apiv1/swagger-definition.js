@@ -10,7 +10,7 @@ const swaggerDefinition = {
     description: 'API description', // Description (optional)
   },
   host: 'temp', // Host (optional)
-  basePath: '/apiv1', // Base path (optional)
+  basePath: '/v1', // Base path (optional)
 }
 
 // Options for the swagger docs

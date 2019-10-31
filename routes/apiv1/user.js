@@ -4,7 +4,7 @@ const createError = require('http-errors');
 
 module.exports = (models, controller) => {
   const { User } = models;
-  router.get('/info', async function(req, res, next) {
+  router.get('/myinfo', async function(req, res, next) {
     try {
       const userId = 3;
       const user = await User.findOne({

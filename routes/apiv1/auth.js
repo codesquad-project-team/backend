@@ -21,7 +21,7 @@ module.exports = (models, controller) => {
                 const secret = req.app.get('jwtSecret');
                 const token = jwt.sign({id : user.id, nickname : user.nickname}, secret, {expiresIn : expirationDate});
 
-                res.cookie('token', token, { path: '/', httpOnly: true });
+                res.cookie('token', token, { domain:'.connectflavor.cf',path: '/', httpOnly: true });
 
                 return res.redirect('/');
             }
@@ -43,7 +43,7 @@ module.exports = (models, controller) => {
                 const secret = req.app.get('jwtSecret');
                 const token = jwt.sign({id : user.id, nickname : user.nickname}, secret, {expiresIn : expirationDate});
                 
-                res.cookie('token', token, { path: '/', httpOnly: true });
+                res.cookie('token', token, { domain:'.connectflavor.cf',path: '/', httpOnly: true });
 
                 return res.redirect('/');
             }

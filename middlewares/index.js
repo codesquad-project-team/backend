@@ -12,15 +12,4 @@ const decodeToken = (req, res, next) => {
     return next();
 }
 
-const registerNickname = (req, res, next) => {
-    if (!req.decoded) return next();
-
-    if (req.decoded.nickname) return next();
-
-    //회원정보 입력 페이지로 redirect
-    // res.redirect('/')
-    res.send(req.decoded);
-
-}
-
 module.exports = { decodeToken, registerNickname }

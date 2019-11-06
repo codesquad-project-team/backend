@@ -39,7 +39,6 @@ app.use(passport.initialize());
 passportConfig(passport, controllers.v1);
 
 app.use(decodeToken)
-app.use(registerNickname)
 
 app.use('/v1', apiRouters.v1);
 

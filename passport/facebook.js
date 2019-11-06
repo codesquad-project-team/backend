@@ -6,7 +6,7 @@ module.exports = (passport, controllers) => {
   passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    callbackURL: "http://13.124.93.76/v1/auth/facebook/callback",
+    callbackURL: "http://api.connectflavor.cf/v1/auth/facebook/callback",
     profileFields: ['id', 'emails', 'name']
   },
     async (accessToken, refreshToken, profile, done) => {

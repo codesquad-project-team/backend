@@ -12,7 +12,7 @@ app.set('jwtSecret', process.env.JWT_SECRET);
 const passport = require('passport');
 const passportConfig = require('./passport');
 
-const {decodeToken, registerNickname} = require('./middlewares');
+const { decodeToken } = require('./middlewares');
 
 const models = {
   v1: require('./models')
@@ -39,7 +39,6 @@ app.use(passport.initialize());
 passportConfig(passport, controllers.v1);
 
 app.use(decodeToken)
-app.use(registerNickname)
 
 app.use('/v1', apiRouters.v1);
 

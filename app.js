@@ -4,10 +4,12 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sequelize = require('./models').sequelize;
-const cors = require('cors');
 const app = express();
 require('dotenv').config();
 app.set('jwtSecret', process.env.JWT_SECRET);
+
+const cors = require('cors');
+const corsOptions = require('./cors');
 
 const passport = require('passport');
 const passportConfig = require('./passport');
@@ -29,10 +31,10 @@ const apiRouters = {
 sequelize.sync();
 
 app.use(logger('dev'));
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());

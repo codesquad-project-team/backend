@@ -12,4 +12,4 @@ const decodeToken = (req, res, next) => {
     return next();
 }
 
-module.exports = { decodeToken, registerNickname }
+module.exports = { decodeToken }

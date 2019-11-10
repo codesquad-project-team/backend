@@ -11,7 +11,7 @@ module.exports = (models, controller) => {
     try{
       const [ postId, page ] = [ req.query.postid, req.query.page ];
 
-      if (!(postId && page)) next(createError(400));
+      if (!(postId && page)) return next(createError(400));
       
       const perPage = 20;
       const paginator = new Paginator({ model: Post, perPage });

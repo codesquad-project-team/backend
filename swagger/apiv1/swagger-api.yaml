@@ -167,7 +167,7 @@ paths:
       produces:
       - "application/json"
       responses:
-        301:
+        302:
           description: "이전 페이지로 이동\n회원가입 페이지로 이동"
   /auth/signup:
     post:

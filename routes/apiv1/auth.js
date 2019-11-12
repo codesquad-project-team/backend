@@ -112,6 +112,16 @@ module.exports = (models, controller) => {
         }
     })
 
+    router.post('/logout', async (req, res, next) => {
+        const referer = req.headers.referer || 'http://connectflavor.cf'
+
+        res.clearCookie('token', { path: '/' });
+
+        return res.redirect(referer);
+
+    })
+
+
 
     return router
 }

@@ -189,6 +189,18 @@ paths:
           description: "nickname 이 없음"
         401:
           description: "유효하지 않은 token"
+  /auth/logout:
+    post:
+      tags:
+      - "auth"
+      summary: "로그아웃"
+      description: "토큰삭제하고 유저를 로그아웃 시킨다."
+      prodeces:
+      - "application/json"
+      parameters:
+      responses:
+        302:
+          description: "메인페이지, 이전페이지로 리다이렉트"
   /externalAPI/naver-search?query={query}:
     get:
       tags:

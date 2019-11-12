@@ -3,7 +3,7 @@ const provider = ['facebook', 'kakao', 'instagram']
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const userRecords = [];
-    for(let i = 1; i <= 21; i++) {
+    for(let i = 1; i <= 100; i++) {
       const userRecord = {
         id: i,
         email: 'gmini.y' + i + '@gmail.com',

@@ -4,7 +4,7 @@ require('dotenv').config();
 module.exports = (passport, controllers) => {
     passport.use(new kakaoStrategy({
         clientID: process.env.KAKAO_CLIENT_ID,
-        callbackURL: "http://api.connectflavor.cf/v1/auth/facebook/callback",
+        callbackURL: "http://api.connectflavor.cf/v1/auth/kakao/callback",
     },
         async (accessToken, refreshToken, profile, done) => {
             const provider = 'kakao';

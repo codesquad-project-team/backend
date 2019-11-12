@@ -230,7 +230,7 @@ paths:
       tags:
       - "auth"
       summary: "로그아웃"
-      description: "토큰삭제하고 유저를 로그아웃 시킨다."
+      description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n토큰삭제하고 유저를 로그아웃 시킨다."
       prodeces:
       - "application/json"
       parameters:

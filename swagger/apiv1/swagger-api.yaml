@@ -3,6 +3,8 @@ tags:
   description: "Everything about post"
 - name: "user"
   description: "Everything about user"
+- name: "externalAPI"
+  description: "Everything about external API"
 schemes:
 - "http"
 paths:
@@ -186,7 +188,7 @@ paths:
         400:
           description: "nickname 이 없음"
         401:
-          description: "유효하지 않은 token"        
+          description: "유효하지 않은 token"
   /auth/logout:
     post:
       tags:
@@ -199,6 +201,28 @@ paths:
       responses:
         302:
           description: "메인페이지, 이전페이지로 리다이렉트"
+  /externalAPI/naver-search?query={query}:
+    get:
+      tags:
+        - "externalAPI"
+      summary: "네이버 검색 API"
+      description: "네이버 검색 API사용. 검색어 query로 입력"
+      prodeces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "query"
+        description: "검색할 단어"
+        required: true
+      responses:
+        200:
+          description: "Success"
+          schema:
+              $ref: "#definitions/naverSearch"
+        400:
+          description: "Bad Request\n query가 없음"
+        500:
+          description: "Internal Server Error"
 definitions:
   fullPostInfo:
     type: "object"
@@ -280,3 +304,37 @@ definitions:
         type: "string"
       profileImage:
         type: "string"
+  naverSearch:
+    type: "object"
+    properties:
+      lastBuildDate:
+        type: "string"
+      total:
+        type: "number"
+      start:
+        type: "number"
+      display:
+        type: "number"
+      items:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            title:
+              type: "string"
+            link:
+              type: "string"
+            category:
+              type: "string"
+            description:
+              type: "string"
+            telephone:
+              type: "string"
+            address:
+              type: "string"
+            roadAddress:
+              type: "string"
+            mapx:
+              type: "string"
+            mapy:
+              type: "string"

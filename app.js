@@ -7,6 +7,8 @@ const sequelize = require('./models').sequelize;
 const app = express();
 require('dotenv').config();
 app.set('jwtSecret', process.env.JWT_SECRET);
+app.set('naverSearchClientId', process.env.NAVER_SEARCH_CLIENT_ID);
+app.set('naverSearchClientSecret', process.env.NAVER_SEARCH_CLIENT_SECRET);
 
 const cors = require('cors');
 const corsOptions = require('./cors');

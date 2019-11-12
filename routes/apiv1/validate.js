@@ -6,6 +6,25 @@ const spaceReg = /\s/g;
 module.exports = (models, controller) => {
     const { User } = models;
 
+    router.post('/tempToken', (req, res, next) => {
+        // 토큰 없는 경우
+        if (!req.cookies.tempToken) return next(createError(401));
+
+        try {
+            const { id } = jwt.verify(req.cookies.tempToken, secret);
+
+            // id가 없는경우
+            if (!id) throw "id is undefined";
+
+            return res.sendStatus(200);
+
+        } catch (error) {
+            // 토큰이 잘못된경우
+            res.clearCookie('tempToken', { path: '/' });
+            return next(createError(401));
+        }
+    });
+
     router.post('/nickname', async (req, res, next) => {
         const { nickname } = req.body;
 

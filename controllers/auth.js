@@ -3,7 +3,7 @@ const auth = {};
 module.exports = (models) => {
     const { User } = models;
 
-    auth.login = async (provider, provided_id, email, done) => {
+    auth.findUser = async (provider, provided_id, email, done) => {
         const user = await User.findOrCreate({
             where: { provider, provided_id },
             defaults: { email, provider, provided_id }
@@ -12,7 +12,8 @@ module.exports = (models) => {
         if (user.length) {
             return done(null, {
                 id: user[0].dataValues.id,
-                nickname: user[0].dataValues.nickname
+                nickname: user[0].dataValues.nickname,
+                provider
             });
         }
 

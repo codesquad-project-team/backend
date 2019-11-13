@@ -1,4 +1,5 @@
 const auth = {};
+const jwt = require('jsonwebtoken')
 
 module.exports = (models) => {
     const { User } = models;
@@ -18,6 +19,28 @@ module.exports = (models) => {
         }
 
         return done(null, false);
+    }
+
+    auth.login = (req, res, id, nickname, maxAge, referer) => {
+        const secret = req.app.get('jwtSecret');
+
+        const token = jwt.sign({ id, nickname }, secret, { expiresIn: `${maxAge}` });
+
+        res.cookie('token', token, { path: '/', httpOnly: true, maxAge: maxAge });
+
+        return res.redirect(referer);
+    }
+
+    auth.tempLogin = (req, res, id, provider, maxAge, referer) => {
+        const secret = req.app.get('jwtSecret');
+
+        const tempToken = jwt.sign({ id, provider, referer }, secret, { expiresIn: `${maxAge}` });
+
+        res.cookie('tempToken', tempToken, { path: '/', httpOnly: true, maxAge: maxAge });
+
+        //redirect : 닉네임 입력 페이지로
+        return res.redirect('http://connectflavor.cf/signup');
+
     }
 
 

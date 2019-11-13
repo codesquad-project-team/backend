@@ -5,8 +5,8 @@ const createError = require('http-errors');
 
 const router = express.Router();
 
-const expirationDate = '7d';
-const twoMin = 5*60*1000;
+const sevenDays = 1000*60*60*24*7;
+const fiveMinutes = 1000*60*5;
 
 module.exports = (models, controller) => {
     const { User } = models;
@@ -18,16 +18,20 @@ module.exports = (models, controller) => {
     router.get('/facebook/callback', (req, res, next) => {
         passport.authenticate('facebook',
             (err, user, info) => {
+                const referer = req.headers.referer || 'http://connectflavor.cf'
+
                 // 로그인 실패
-                // 로그인 페이지로 redirect or front 에 에러 주기
-                if (!user) return res.redirect('/');
+                if (!user) return res.redirect(referer);
 
                 const secret = req.app.get('jwtSecret');
-                const token = jwt.sign({id : user.id, nickname : user.nickname}, secret, {expiresIn : expirationDate});
 
-                res.cookie('token', token, { domain:'.connectflavor.cf',path: '/', httpOnly: true });
+                //nickname 이 없는 경우 => 회원가입
+                if (!user.nickname) {
+                    return controller.tempLogin(req,res,user.id, user.provider, fiveMinutes, referer);
+                }
 
-                return res.redirect('/');
+                //로그인 성공
+                return controller.login(req, res, user.id, user.nickname, sevenDays, referer)
             }
         )(req, res, next)
 
@@ -49,20 +53,11 @@ module.exports = (models, controller) => {
 
                 //nickname 이 없는 경우 => 회원가입
                 if (!user.nickname) {
-                    const tempToken = jwt.sign({ id: user.id, referer }, secret, { expiresIn: '5m' });
-
-                    res.cookie('tempToken', tempToken, { domain: '.connectflavor.cf', path: '/', httpOnly: true, maxAge: twoMin });
-
-                    //redirect : 닉네임 입력 페이지로
-                    return res.redirect('http://connectflavor.cf/signup');
+                    return controller.tempLogin(req,res,user.id, user.provider, fiveMinutes, referer);
                 }
 
                 //로그인 성공
-                const token = jwt.sign({ id: user.id, nickname: user.nickname }, secret, { expiresIn: expirationDate });
-
-                res.cookie('token', token, { domain: '.connectflavor.cf', path: '/', httpOnly: true });
-
-                return res.redirect(referer);
+                return controller.login(req, res, user.id, user.nickname, sevenDays, referer)
             }
         )(req, res, next)
     });
@@ -99,11 +94,7 @@ module.exports = (models, controller) => {
             //성공
             res.clearCookie('tempToken', { path: '/' });
 
-            const token = jwt.sign({ id: user.id, nickname: user.nickname }, secret, { expiresIn: expirationDate });
-
-            res.cookie('token', token, { domain: '.connectflavor.cf', path: '/', httpOnly: true });
-
-            return res.redirect(referer);
+            return controller.login(req, res, id, nickname, sevenDays, referer)
 
         } catch (error) {
             // 토큰이 잘못된경우

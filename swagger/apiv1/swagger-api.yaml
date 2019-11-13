@@ -200,7 +200,9 @@ paths:
       parameters:
       responses:
         200:
-          description: "검증된 토큰 "
+          description: "검증된 토큰"
+          schema:
+              $ref: "#definitions/provider"
         401:
           description: "유효하지 않은 token"        
   /validate/nickname:
@@ -374,3 +376,8 @@ definitions:
               type: "string"
             mapy:
               type: "string"
+  provider:
+    type: "object"
+    properties:
+      provider:
+        type: "string"

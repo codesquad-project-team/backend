@@ -11,12 +11,12 @@ module.exports = (models, controller) => {
         if (!req.cookies.tempToken) return next(createError(401));
 
         try {
-            const { id } = jwt.verify(req.cookies.tempToken, secret);
+            const { id, provider } = jwt.verify(req.cookies.tempToken, secret);
 
             // id가 없는경우
             if (!id) throw "id is undefined";
 
-            return res.sendStatus(200);
+            return res.json({ provider });
 
         } catch (error) {
             // 토큰이 잘못된경우

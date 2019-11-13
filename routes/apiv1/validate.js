@@ -16,7 +16,7 @@ module.exports = (models, controller) => {
             // id가 없는경우
             if (!id) throw "id is undefined";
 
-            return res.json(provider);
+            return res.json({ provider });
 
         } catch (error) {
             // 토큰이 잘못된경우

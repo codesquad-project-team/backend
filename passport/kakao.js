@@ -12,7 +12,7 @@ module.exports = (passport, controllers) => {
             const email = profile._json.kakao_account.email || null;
 
             try {
-                controllers.auth.login(provider, providedId, email, done);
+                controllers.auth.findUser(provider, providedId, email, done);
 
             } catch (error) {
                 return done(error);

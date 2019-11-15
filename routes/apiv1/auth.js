@@ -80,7 +80,7 @@ module.exports = (models, controller) => {
             if (!id) throw "id is undefined";
 
             const user = await User.findOne({
-                where: { id: postId }
+                where: { id }
             })
 
             // user 조회 안되는경우

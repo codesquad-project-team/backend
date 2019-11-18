@@ -63,5 +63,19 @@ module.exports = (models, controller) => {
       return next(error);
     }
   });
+
+  router.post('/follow/:id', async (req, res, next) => {
+    try {
+      const userId = parseInt(req.decoded.id);
+      const followingId = parseInt(req.params.id);
+      if(!followingId || !userId) return next(createError(400));
+      const user = await User.findOne({ where: {id: followingId} });
+      await user.addFollowing(userId);
+      return res.send();
+    } catch (error) {
+      return next(error);
+    }
+  });
+
   return router  
 }

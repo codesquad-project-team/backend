@@ -31,6 +31,11 @@ module.exports = {
                     },
                     key: 'id'
                 }
+            },
+            deletedAt: {
+              allowNull: true,
+              type: Sequelize.DATE,
+              defaultValue: null
             }
         },
         {

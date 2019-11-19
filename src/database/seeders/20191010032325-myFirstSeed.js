@@ -25,7 +25,6 @@ module.exports = {
         longitude: 127.0312283,
         address: "서울특별시 강남구 강남대로62길 23 4층",
         link: "codesquad.kr",
-        external_link: "naver.com",
         phone: "070-4117-1005"
       },
       {
@@ -33,14 +32,12 @@ module.exports = {
         latitude: 37.5845218,
         longitude: 126.9975588,
         address: "서울특별시 종로구 창경궁로33길 12",
-        external_link: "naver.com",
         phone: "070-5213-1729"
       },
       {
         name: "신오리경로당",
         latitude: 37.3896438,
         longitude: 126.9236679,
-        external_link: "naver.com",
         address: "경상북도 상주시 낙동면 신오3길 101",
       }
     ]
@@ -56,6 +53,7 @@ module.exports = {
       for(let locationId = start;  locationId <= end; locationId++) {
         const postRecord = {
           title_companion: (locationId%2 === 0) ? "친구" : "애인",
+          title_location: `장소${locationId}`,
           title_activity: '맥주' + locationId + '잔 마시기',
           description: '테스트입니다.',
           createdAt: new Date(),

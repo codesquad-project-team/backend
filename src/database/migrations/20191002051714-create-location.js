@@ -32,6 +32,11 @@ module.exports = {
       phone: {
         type : Sequelize.STRING(45),
         allowNull : true
+      },
+      deletedAt: {
+        allowNull: true,
+        type: Sequelize.DATE,
+        defaultValue: null
       }
     }, {
       timestamps: true,

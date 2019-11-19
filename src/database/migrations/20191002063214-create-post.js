@@ -9,6 +9,10 @@ module.exports = {
         unique: true,
         type: Sequelize.INTEGER
       },
+      title_location: {
+        type: Sequelize.STRING(45),
+        allowNull: false
+      },
       title_companion: {
         type: Sequelize.STRING(45),
         allowNull: false
@@ -53,6 +57,7 @@ module.exports = {
       }
     }, {
       timestamps: true,
+      paranoid: true,
       charset: 'utf8',
       collate: 'utf8_general_ci',
       modelName: 'post'

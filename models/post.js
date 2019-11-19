@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       type: DataTypes.INTEGER,
     },
+    title_location: {
+      type: DataTypes.STRING(45),
+      allowNull: false
+    },
     title_companion: {
       type: DataTypes.STRING(45),
       allowNull: false
@@ -22,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     timestamps: true,
+    paranoid: true,
     charset: 'utf8',
     collate: 'utf8_general_ci',
     modelName: 'post'

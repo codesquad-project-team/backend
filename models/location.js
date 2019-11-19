@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const location = sequelize.define('location', {
     name: {
       type: DataTypes.STRING(45),
-      allowNull : false
+      allowNull : true
     },
     latitude: {
       type : DataTypes.DECIMAL(10,7),
@@ -21,16 +21,13 @@ module.exports = (sequelize, DataTypes) => {
       type : DataTypes.STRING(255),
       allowNull : true
     },
-    external_link: {
-      type : DataTypes.STRING(255),
-      allowNull : true
-    },
     phone: {
       type : DataTypes.STRING(45),
       allowNull : true
     }
   }, {
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     charset: 'utf8',
     collate: 'utf8_general_ci',
     modelName: 'location'

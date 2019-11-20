@@ -31,10 +31,16 @@ module.exports = {
                     },
                     key: 'id'
                 }
+            },
+            deletedAt: {
+              allowNull: true,
+              type: Sequelize.DATE,
+              defaultValue: null
             }
         },
         {
             timestamps: true,
+            paranoid: true,
             charset: 'utf8',
             collate: 'utf8_general_ci',
             modelName: 'follow'

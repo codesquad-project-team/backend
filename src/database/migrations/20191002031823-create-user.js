@@ -42,9 +42,25 @@ module.exports = {
         type: Sequelize.STRING(45),
         allowNull: false,
         defaultValue: 'normal'
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+      },
+      deletedAt: {
+        allowNull: true,
+        type: Sequelize.DATE,
+        defaultValue: null
       }
     }, {
       timestamps: true,
+      paranoid: true,
       charset: 'utf8',
       collate: 'utf8_general_ci',
       modelName: 'user'

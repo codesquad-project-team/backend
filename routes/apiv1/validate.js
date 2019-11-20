@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const createError = require('http-errors');
 const spaceReg = /\s/g;
+const jwt = require('jsonwebtoken');
 
 module.exports = (models, controller) => {
     const { User } = models;
@@ -11,6 +12,8 @@ module.exports = (models, controller) => {
         if (!req.cookies.tempToken) return next(createError(401));
 
         try {
+            const secret = req.app.get('jwtSecret');
+
             const { id, provider } = jwt.verify(req.cookies.tempToken, secret);
 
             // id가 없는경우

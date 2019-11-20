@@ -21,13 +21,17 @@ module.exports = (models) => {
         return done(null, false);
     }
 
-    auth.login = (req, res, id, nickname, maxAge, referer) => {
+    auth.login = (req, res, id, nickname, maxAge, referer, previousAction) => {
         const secret = req.app.get('jwtSecret');
 
         const token = jwt.sign({ id, nickname }, secret, { expiresIn: `${maxAge}` });
 
         res.cookie('token', token, { path: '/', httpOnly: true, maxAge: maxAge });
 
+        if(previousAction === 'signup'){
+            return res.json(JSON.stringify({referer}));
+        }
+        
         return res.redirect(referer);
     }
 

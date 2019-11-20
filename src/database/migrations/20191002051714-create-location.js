@@ -11,7 +11,7 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING(45),
-        allowNull : false
+        allowNull : true
       },
       latitude: {
         type : Sequelize.DECIMAL(10,7),
@@ -29,16 +29,28 @@ module.exports = {
         type : Sequelize.STRING(255),
         allowNull : true
       },
-      external_link: {
-        type : Sequelize.STRING(255),
-        allowNull : true
-      },
       phone: {
         type : Sequelize.STRING(45),
         allowNull : true
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+      },
+      deletedAt: {
+        allowNull: true,
+        type: Sequelize.DATE,
+        defaultValue: null
       }
     }, {
       timestamps: true,
+      paranoid: true,
       charset: 'utf8',
       collate: 'utf8_general_ci',
       modelName: 'location'

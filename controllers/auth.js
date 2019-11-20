@@ -28,7 +28,7 @@ module.exports = (models) => {
 
         res.cookie('token', token, { path: '/', httpOnly: true, maxAge: maxAge });
 
-        return res.redirect(referer);
+        return res.json(JSON.stringify({referer}));
     }
 
     auth.tempLogin = (req, res, id, provider, maxAge, referer) => {

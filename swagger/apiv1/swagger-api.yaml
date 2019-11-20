@@ -202,8 +202,10 @@ paths:
         description: "회원가입하는 nickname"
         required: true
       responses:
-        301:
-          description: "회원가입 성공, 토큰 발급 및 이전 페이지로 redirect"
+        200:
+          description: "회원가입 성공\n토큰발급\n리다이렉트 할  referer 를 응답"
+          schema:
+              $ref: "#definitions/referer"
         400:
           description: "nickname 이 없음"
         401:
@@ -256,8 +258,10 @@ paths:
       - "application/json"
       parameters:
       responses:
-        302:
-          description: "메인페이지, 이전페이지로 리다이렉트"
+        200:
+          description: "로그아웃성공\n리다이렉트 할  referer 를 응답"
+          schema:
+              $ref: "#definitions/referer"
   /externalAPI/naver-search?query={query}:
     get:
       tags:
@@ -399,4 +403,9 @@ definitions:
     type: "object"
     properties:
       provider:
+        type: "string"
+  referer:
+    type: "object"
+    properties:
+      referer:
         type: "string"

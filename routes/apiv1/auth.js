@@ -107,9 +107,8 @@ module.exports = (models, controller) => {
         const referer = req.headers.referer || 'http://connectflavor.cf'
 
         res.clearCookie('token', { path: '/' });
-
-        return res.redirect(referer);
-
+        
+        return res.json(JSON.stringify({referer}));
     })
 
 

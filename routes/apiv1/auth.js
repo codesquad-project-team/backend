@@ -94,7 +94,7 @@ module.exports = (models, controller) => {
             //성공
             res.clearCookie('tempToken', { path: '/' });
 
-            return controller.login(req, res, id, nickname, sevenDays, referer)
+            return controller.login(req, res, id, nickname, sevenDays, referer, 'signup')
 
         } catch (error) {
             // 토큰이 잘못된경우

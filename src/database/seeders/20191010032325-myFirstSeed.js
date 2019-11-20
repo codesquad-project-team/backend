@@ -12,7 +12,10 @@ module.exports = {
         nickname: '잉글비' + i,
         description: '나는 바보 닙니다',
         provider: `${provider[i%3]}`,
-        provided_id: `${i*11}`
+        provided_id: `${i*11}`,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null
       };
       userRecords.push(userRecord);
     }
@@ -25,20 +28,29 @@ module.exports = {
         longitude: 127.0312283,
         address: "서울특별시 강남구 강남대로62길 23 4층",
         link: "codesquad.kr",
-        phone: "070-4117-1005"
+        phone: "070-4117-1005",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null
       },
       {
         name: "공공거실",
         latitude: 37.5845218,
         longitude: 126.9975588,
         address: "서울특별시 종로구 창경궁로33길 12",
-        phone: "070-5213-1729"
+        phone: "070-5213-1729",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null
       },
       {
         name: "신오리경로당",
         latitude: 37.3896438,
         longitude: 126.9236679,
         address: "경상북도 상주시 낙동면 신오3길 101",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: null
       }
     ]
     await queryInterface.bulkInsert('locations', locations, {});
@@ -58,6 +70,7 @@ module.exports = {
           description: '테스트입니다.',
           createdAt: new Date(),
           updatedAt: new Date(),
+          deletedAt: null,
           writer_id: userRecord.id,
           location_id: locationId
         }
@@ -74,7 +87,10 @@ module.exports = {
         const imageRecord = {
                             url,
                             post_id: postId,
-                            is_representative: (i === 1)
+                            is_representative: (i === 1),
+                            createdAt: new Date(),
+                            updatedAt: new Date(),
+                            deletedAt: null
                           };
         imageRecords.push(imageRecord);
       }

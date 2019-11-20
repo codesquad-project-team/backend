@@ -35,7 +35,7 @@ module.exports = {
       return bulkFollowData.push(record);
     });
 
-    await queryInterface.bulkInsert('follow', bulkFollowData, {});
+    await queryInterface.bulkInsert('follows', bulkFollowData, {});
     return;
   },
 

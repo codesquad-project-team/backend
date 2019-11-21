@@ -3,7 +3,7 @@ const router = express.Router();
 const createError = require('http-errors');
 
 module.exports = (models, controller) => {
-  const { User, Post, sequelize } = models;
+  const { User, Post } = models;
   router.get('/myinfo', async function(req, res, next) {
     try {
       const userId = 3;
@@ -68,9 +68,24 @@ module.exports = (models, controller) => {
     try {
       const userId = parseInt(req.decoded.id);
       const followingId = parseInt(req.params.id);
-      if(!followingId || !userId) return next(createError(400));
-      const user = await User.findOne({ where: {id: followingId} });
-      await user.addFollowing(userId);
+      if(!userId) return next(createError(401));
+      if(!followingId) return next(createError(400));
+      const user = await User.findOne({ where: {id: userId} });
+      await user.addFollowings(followingId, { timestamps: false });
+      return res.send();
+    } catch (error) {
+      return next(error);
+    }
+  });
+
+  router.delete('/follow/:id', async (req, res, next) => {
+    try {
+      const userId = parseInt(req.decoded.id);
+      const followingId = parseInt(req.params.id);
+      if(!userId) return next(createError(401));
+      if(!followingId) return next(createError(400));
+      const user = await User.findOne({ where: {id: userId} });
+      await user.removeFollowing(followingId);
       return res.send();
     } catch (error) {
       return next(error);

@@ -27,8 +27,6 @@ module.exports = {
     const bulkFollowData = [];
     follow.forEach(element => {
       const record = {
-        createdAt: new Date(),
-        updatedAt: new Date(),
         follower_id: element[0],
         following_id: element[1]
       }

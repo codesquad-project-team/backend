@@ -16,7 +16,9 @@ const corsOptions = require('./cors');
 const passport = require('passport');
 const passportConfig = require('./passport');
 
-const { decodeToken } = require('./middlewares');
+const middlewares = {
+  v1 : require('./middlewares')
+}
 
 const models = {
   v1: require('./models')
@@ -27,7 +29,7 @@ const controllers = {
 }
 
 const apiRouters = {
-  v1: require('./routes/apiv1')(models.v1, controllers.v1)
+  v1: require('./routes/apiv1')(models.v1, controllers.v1, middlewares.v1)
 }
 
 sequelize.sync();
@@ -42,7 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 passportConfig(passport, controllers.v1);
 
-app.use(decodeToken)
+app.use(middlewares.v1.decodeToken)
 
 app.use('/v1', apiRouters.v1);
 

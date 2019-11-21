@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('follow', {
+        return queryInterface.createTable('follows', {
             follower_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
@@ -22,12 +22,12 @@ module.exports = {
                     key: 'id'
                 }
             }
-        },
-        {
+        }, {
             charset: 'utf8',
             collate: 'utf8_general_ci',
-            modelName: 'follow'
-          });
+            modelName: 'follow',
+            timestamps: false
+        });
     },
 
     down: (queryInterface, Sequelize) => {

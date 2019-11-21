@@ -28,10 +28,10 @@ module.exports = (models) => {
 
         res.cookie('token', token, { path: '/', httpOnly: true, maxAge: maxAge });
 
-        if(previousAction === 'signup'){
-            return res.json(JSON.stringify({referer}));
+        if (previousAction === 'signup') {
+            return res.json({ referer });
         }
-        
+
         return res.redirect(referer);
     }
 

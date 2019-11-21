@@ -284,6 +284,22 @@ paths:
           description: "Bad Request\n query가 없음"
         500:
           description: "Internal Server Error"  
+  /auth/has-logged-in:
+    get:
+      tags:
+      - "auth"
+      summary: "로그인 확인"
+      description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n로그인 여부를 확인하고, 로그인 시 id, nickname, profileImage를 응답한다."
+      prodeces:
+      - "application/json"
+      parameters:
+      responses:
+        200:
+          description: "로그인 상태\nid, nickname, profileImage를 준다"
+          schema:
+              $ref: "#definitions/tokenInfo"
+        401:
+          description: "로그인 상태가 아님"
 definitions:
   fullPostInfo:
     type: "object"
@@ -408,4 +424,13 @@ definitions:
     type: "object"
     properties:
       referer:
+        type: "string"
+  tokenInfo:
+    type: "object"
+    properties:
+      id:
+        type: "int"
+      nickname:
+        type: "string"
+      profileImage:
         type: "string"

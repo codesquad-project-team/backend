@@ -8,8 +8,9 @@ const router = express.Router();
 const sevenDays = 1000*60*60*24*7;
 const fiveMinutes = 1000*60*5;
 
-module.exports = (models, controller) => {
+module.exports = (models, controller, middlewares) => {
     const { User } = models;
+    const { isLoggedIn } = middlewares;
 
     router.get('/facebook', passport.authenticate('facebook', {
         scope: ['email']
@@ -22,8 +23,6 @@ module.exports = (models, controller) => {
 
                 // 로그인 실패
                 if (!user) return res.redirect(referer);
-
-                const secret = req.app.get('jwtSecret');
 
                 //nickname 이 없는 경우 => 회원가입
                 if (!user.nickname) {
@@ -49,15 +48,13 @@ module.exports = (models, controller) => {
                 // 로그인 실패
                 if (!user) return res.redirect(referer);
 
-                const secret = req.app.get('jwtSecret');
-
                 //nickname 이 없는 경우 => 회원가입
                 if (!user.nickname) {
-                    return controller.tempLogin(req,res,user.id, user.provider, fiveMinutes, referer);
+                    return controller.tempLogin(req, res, user, fiveMinutes, referer);
                 }
 
                 //로그인 성공
-                return controller.login(req, res, user.id, user.nickname, sevenDays, referer)
+                return controller.login(req, res, user, sevenDays, referer)
             }
         )(req, res, next)
     });
@@ -94,7 +91,13 @@ module.exports = (models, controller) => {
             //성공
             res.clearCookie('tempToken', { path: '/' });
 
-            return controller.login(req, res, id, nickname, sevenDays, referer, 'signup')
+            const userInfo = {
+                id: id,
+                nickname: user.nickname,
+                profileImage: user[0].dataValues.profile_image,
+            }
+
+            return controller.login(req, res, userInfo, sevenDays, referer, 'signup')
 
         } catch (error) {
             // 토큰이 잘못된경우
@@ -111,6 +114,9 @@ module.exports = (models, controller) => {
         return res.json({ referer });
     })
 
+    router.get('/has-logged-in', isLoggedIn, (req, res, next) => {
+        return res.json(req.decoded);
+    })
 
 
     return router

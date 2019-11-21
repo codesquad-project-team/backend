@@ -93,7 +93,7 @@ module.exports = (models, controller, middlewares) => {
 
             const userInfo = {
                 id: id,
-                nickname: user.nickname,
+                nickname: nickname,
                 profileImage: user.dataValues.profile_image,
             }
 

@@ -66,12 +66,12 @@ module.exports = (models, controller) => {
 
   router.post('/follow/:id', async (req, res, next) => {
     try {
-      //const userId = parseInt(req.decoded.id);
-      const userId = 3;
+      const userId = parseInt(req.decoded.id);
       const followingId = parseInt(req.params.id);
-      if(!followingId || !userId) return next(createError(400));
+      if(!userId) return next(createError(401));
+      if(!followingId) return next(createError(400));
       const user = await User.findOne({ where: {id: userId} });
-      await user.addFollowing(followingId);
+      await user.addFollowings(followingId, { timestamps: false });
       return res.send();
     } catch (error) {
       return next(error);
@@ -80,10 +80,10 @@ module.exports = (models, controller) => {
 
   router.delete('/follow/:id', async (req, res, next) => {
     try {
-      //const userId = parseInt(req.decoded.id);
-      const userId = 3;
+      const userId = parseInt(req.decoded.id);
       const followingId = parseInt(req.params.id);
-      if(!followingId || !userId) return next(createError(400));
+      if(!userId) return next(createError(401));
+      if(!followingId) return next(createError(400));
       const user = await User.findOne({ where: {id: userId} });
       await user.removeFollowing(followingId);
       return res.send();

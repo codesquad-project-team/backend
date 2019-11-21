@@ -75,6 +75,28 @@ paths:
           description: "Success"
         400:
           description: "Bad Request\n user id 가 없거나 잘못되었음"
+        401:
+          description: "유효하지 않은 토큰"
+        500:
+          description: "Internal Server Error"
+    delete:
+      tags:
+        - "user"
+      summary: "follow 취소"
+      prodeces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "user id"
+        description: "follow 취소 할 user id"
+        required: true
+      responses:
+        200:
+          description: "Success"
+        400:
+          description: "Bad Request\n user id 가 없거나 잘못되었음"
+        401:
+          description: "유효하지 않은 토큰"
         500:
           description: "Internal Server Error"
   /post?page={page number}&writerid={writer id}:

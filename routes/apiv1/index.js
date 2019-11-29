@@ -10,7 +10,7 @@ const externalAPIRouter = require('./externalAPI');
 
 module.exports = (models, controllers, middlewares) => {
   router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-  router.use('/user', userRouter(models));
+  router.use('/user', userRouter(models, middlewares));
   router.use('/post', postRouter(models, controllers.post));
   router.use('/auth', authRouter(models, controllers.auth, middlewares));
   router.use('/validate', validateRouter(models, null));

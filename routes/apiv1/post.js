@@ -3,10 +3,10 @@ const router = express.Router();
 const createError = require('http-errors');
 const Paginator = require('../../src/paginatior');
 
-module.exports = (models, controller) => {
+module.exports = (models, controller, middlewares) => {
   const { User, Post, Location, Image, Sequelize } = models;
   const { parseRelatedData, parsePaginatedData } = controller;
-
+  const { isLoggedIn } = middlewares;
   router.get('/related-to', async (req, res, next) => {
     try{
       const [ postId, page ] = [ req.query.postid, req.query.page ];
@@ -72,7 +72,57 @@ module.exports = (models, controller) => {
       return next(error);    
     }
   });
+  router.post('/', isLoggedIn, async (req, res, next) => {
+    /*{
+      location: {
+        name:
+        latitude:
+        longitude:
+        address:
+        link:
+        phone:
+      },
+      post: {
+        title_location:
+        title_companion:
+        title_activity:
+        description:
+        images: [
+          {
+            url:
+            is_representative:
+          },
+          {
+            url:
+            is_representative:
+          },
+        ]
+      }
+    }*/
+    const { location, post } = req.body;
+
+    try {
+      const locationResult = await Location.findOrCreate({
+        where: {
+          latitude: location.latitude,
+          longitude: location.longitude,
+          address: location.address
+        }
+      });
+      post.writer_id = req.decoded.id;
+      post.location_id = locationResult[0].id;
   
+      const postResult = await Post.create(post, {
+        include: [{
+          model: Image, as: 'images'
+        }]
+      });
+      res.json(postResult);
+    } catch (error) {
+      return next(error)
+    }
+  });
+
   router.get('/:id', async (req, res, next) => {
     try {
       const postId = req.params.id;
@@ -109,7 +159,6 @@ module.exports = (models, controller) => {
         "locationAddress": post.location.address,
         "locationPhoneNumber": post.location.phone,
         "locationLinkAddress": post.location.link,
-        "locationExternalLink": post.location.external_link
       }
       post.images.forEach(image => postInfo.postImageURLs.push(image.url));
       res.json(postInfo);

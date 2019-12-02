@@ -2,13 +2,31 @@ const express = require('express');
 const router = express.Router();
 const createError = require('http-errors');
 
-module.exports = (models, controller) => {
+module.exports = (models, middlewares) => {
   const { User, Post } = models;
-  router.get('/myinfo', async function(req, res, next) {
+  const { isLoggedIn } = middlewares;
+  
+  router.put('/profile', isLoggedIn, async (req, res, next) => {
+    const { id } = req.decoded;
+    if (!id) return next(createError(401));
+    const userInfo = req.body;
+    const userTableAttributes = Object.keys(User.tableAttributes);
+    const updatingInfoAttributes = Object.keys(userInfo);
+    const unexpectedKeys = updatingInfoAttributes.filter(key => !userTableAttributes.includes(key));
+    if (unexpectedKeys.length) return next(createError(400, "invalid attributes"));
     try {
-      const userId = 3;
+      await User.update(userInfo, { where: { id }});
+      return res.send();
+    } catch (error) {
+      return next(error);
+    }
+  });
+
+  router.get('/myinfo', isLoggedIn, async (req, res, next) => {
+    try {
+      const { id } = req.decoded;
       const user = await User.findOne({
-        where: { id: userId }, 
+        where: { id }, 
         attributes: { exclude: ['authority']}
       });
       if(user === null) return next(createError(500));
@@ -26,11 +44,10 @@ module.exports = (models, controller) => {
     }
   });
 
-  router.get('/profile-content', async function(req, res, next) {
+  router.get('/profile-content', async (req, res, next) => {
     try {
       const userId = req.query.id;
-      const isMyProfile = false;
-      if(req.decoded) isMyProfile = (req.decoded.id === userId);
+      const isMyProfile = req.decoded.id === userId;
 
       const user = await User.findOne({
         where: { id: userId },

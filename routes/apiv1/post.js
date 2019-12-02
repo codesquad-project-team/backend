@@ -73,34 +73,7 @@ module.exports = (models, controller, middlewares) => {
     }
   });
   router.post('/', isLoggedIn, async (req, res, next) => {
-    /*{
-      location: {
-        name:
-        latitude:
-        longitude:
-        address:
-        link:
-        phone:
-      },
-      post: {
-        title_location:
-        title_companion:
-        title_activity:
-        description:
-        images: [
-          {
-            url:
-            is_representative:
-          },
-          {
-            url:
-            is_representative:
-          },
-        ]
-      }
-    }*/
     const { location, post } = req.body;
-
     try {
       const locationResult = await Location.findOrCreate({
         where: {
@@ -117,7 +90,7 @@ module.exports = (models, controller, middlewares) => {
           model: Image, as: 'images'
         }]
       });
-      res.json(postResult);
+      res.send();
     } catch (error) {
       return next(error)
     }

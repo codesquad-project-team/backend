@@ -121,6 +121,27 @@ paths:
           description: "유효하지 않은 토큰"
         500:
           description: "Internal Server Error"
+  /post:
+    post:
+      tags:
+        - "post"
+      summary: "post 등록"
+      prodeces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "post-info"
+        description: "등록할 포스트 정보"
+        require: true
+        schema:
+          $ref: "#/definitions/uploadingPost"
+      responses:
+        200:
+          description: "Success"
+        401:
+          description: "unauthorized, 로그인 안한 회원"
+        500:
+          description: "Internal Server Error"
   /post?page={page number}&writerid={writer id}:
     get:
       tags:
@@ -345,6 +366,44 @@ paths:
         401:
           description: "로그인 상태가 아님"
 definitions:
+  uploadingPost:
+    type: "object"
+    properties:
+      location:
+        type: "object"
+        properties:
+          name:
+            type: "string"
+          latitude:
+            type: "number"
+          longitude:
+            type: "number"
+          address:
+            type: "string"
+          link:
+            type: "string"
+          phone:
+            type: "string"
+      post:
+        type: "object"
+        properties:
+          title_location:
+            type: "string"
+          title_companion:
+            type: "string"
+          title_activity:
+            type: "string"
+          description:
+            type: "string"
+          images:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                url:
+                  type: "string"
+                is_representative:
+                  type: "boolean"
   fullPostInfo:
     type: "object"
     properties:
@@ -375,8 +434,6 @@ definitions:
       locationPhoneNumber:
         type: "string"
       locationLinkAddress:
-        type: "string"
-      locationExternalLink:
         type: "string"
   relatedPost:
     type: "object"

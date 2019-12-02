@@ -8,6 +8,28 @@ tags:
 schemes:
 - "http"
 paths:
+  /user/profile:
+    put:
+      tags:
+      - "user"
+      summary: "user 정보 업데이트"
+      prodeces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "userInfo"
+        description: "update 할 유저 정보"
+        required: true
+        schema:
+          $ref: "#definitions/userInfo"
+      responses:
+        200:
+          description: "Success"
+        401:
+          description: "unauthorized"
+        400:
+          description: "bad request, params 확인"
+        
   /user/myinfo:
     get:
       tags:
@@ -455,4 +477,17 @@ definitions:
       nickname:
         type: "string"
       profileImage:
+        type: "string"
+  userInfo:
+    type: "object"
+    properties:
+      nickname:
+        type: "string"
+      email:
+        type: "string"
+      phone:
+        type: "string"
+      profile_image:
+        type: "string"
+      description:
         type: "string"

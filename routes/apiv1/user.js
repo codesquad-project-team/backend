@@ -12,8 +12,8 @@ module.exports = (models, middlewares) => {
     const userInfo = req.body;
     const userTableAttributes = Object.keys(User.tableAttributes);
     const updatingInfoAttributes = Object.keys(userInfo);
-    const unexpectedKeys = updatingInfoAttributes.filter(key => !userTableAttributes.includes(key));
-    if (unexpectedKeys.length) return next(createError(400, "invalid attributes"));
+    const unexpectedAttributes = updatingInfoAttributes.filter(key => !userTableAttributes.includes(key));
+    if (unexpectedAttributes.length) return next(createError(400, "invalid attributes"));
     try {
       await User.update(userInfo, { where: { id }});
       return res.send();

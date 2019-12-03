@@ -72,6 +72,7 @@ module.exports = (models, controller, middlewares) => {
       return next(error);    
     }
   });
+
   router.post('/', isLoggedIn, async (req, res, next) => {
     const { location, post } = req.body;
     try {
@@ -90,7 +91,26 @@ module.exports = (models, controller, middlewares) => {
           model: Image, as: 'images'
         }]
       });
-      res.send();
+      res.json(postResult);
+    } catch (error) {
+      return next(error)
+    }
+  });
+
+  router.delete('/:id', isLoggedIn, async (req, res, next) => {
+    const userId = req.decoded.id;
+    const postId = req.params.id;
+    if (!userId) return next(createError(401));
+    if (!postId) return next(createError(400));
+    try {
+      const result = await Post.destroy({
+        where: {
+          id: postId,
+          writer_id: userId
+        },
+        individualHooks: true
+      });
+      res.json(result);
     } catch (error) {
       return next(error)
     }

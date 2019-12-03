@@ -53,9 +53,11 @@ module.exports = (models, controller, middlewares) => {
                         attributes: ['profile_image', 'nickname']
                       }, {
                         model: Location,
+                        as: 'location',
                         attributes: ['name']
                       }, {
                         model: Image,
+                        as: 'images',
                         where: { is_representative: true },
                         attributes: ['url']
                       }];

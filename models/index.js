@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-
+const paranoidDeleteCascade = require('../src/database/hooks/paranoid-delete-cascade');
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../../config/config.js')[env];
 const db = {};
@@ -15,8 +15,8 @@ db.Image = require('./image')(sequelize, Sequelize);
 db.Location = require('./location')(sequelize, Sequelize);
 db.follow = require('./follow')(sequelize, Sequelize);
 
-db.Post.hasMany(db.Image, {as: "images", foreignKey : 'post_id' , sourceKey : 'id'});
-db.Image.belongsTo(db.Post, {as: "post", foreignKey : 'post_id' , targetKey : 'id'});
+db.Post.hasMany(db.Image, {as: "images", foreignKey : 'post_id' , sourceKey : 'id', onDelete: 'cascade', hooks: true });
+db.Image.belongsTo(db.Post, {as: "post", foreignKey : 'post_id' , targetKey : 'id' });
 
 db.Location.hasMany(db.Post, {as: "posts", foreignKey : 'location_id' , sourceKey : 'id'});
 db.Post.belongsTo(db.Location, {as: "location", foreignKey : 'location_id' , targetKey : 'id'});
@@ -26,5 +26,14 @@ db.Post.belongsTo(db.User, {foreignKey : 'writer_id' , targetKey : 'id'});
 
 db.User.belongsToMany(db.User, {as : 'followers', foreignKey : 'following_id', through : 'follow'});
 db.User.belongsToMany(db.User, {as : 'followings', foreignKey : 'follower_id', through : 'follow'});
+
+db.Post.addHook('afterDestroy', async post => {
+  try {
+    const images = await post.getImages();
+    return images.map(async image => await image.destroy());
+  } catch (error) {
+    throw error;
+  }
+});
 
 module.exports = db;

@@ -29,7 +29,6 @@ paths:
           description: "unauthorized"
         400:
           description: "bad request, params 확인"
-        
   /user/myinfo:
     get:
       tags:
@@ -198,6 +197,29 @@ paths:
           description: "Bad Request.\npost id가 없다."
         404:
           description: "Not found.\n해당 post id의 post가 없다."
+    delete:
+      tags:
+      - "post"
+      summary: "delete post"
+      description: "post delete"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "id"
+        description: "post id"
+        required: true
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "number"
+        400:
+          description: "Bad Request.\npost id가 없다."
+        401:
+          description: "unauthorized"
+        500:
+          description: "internal server error"
   /post/related-to?postid={post id}&page={page number}:
     get:
       tags:

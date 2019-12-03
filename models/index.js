@@ -27,7 +27,7 @@ db.Post.belongsTo(db.User, {foreignKey : 'writer_id' , targetKey : 'id'});
 db.User.belongsToMany(db.User, {as : 'followers', foreignKey : 'following_id', through : 'follow'});
 db.User.belongsToMany(db.User, {as : 'followings', foreignKey : 'follower_id', through : 'follow'});
 
-db.Post.addHook('afterDestroy', async (post, options, next) => {
+db.Post.addHook('afterDestroy', async post => {
   try {
     const images = await post.getImages();
     return images.map(async image => await image.destroy());

@@ -110,7 +110,8 @@ module.exports = (models, controller, middlewares) => {
         },
         individualHooks: true
       });
-      res.json(result);
+      if (result) return next(createError(400));
+      res.send();
     } catch (error) {
       return next(error)
     }
@@ -126,13 +127,15 @@ module.exports = (models, controller, middlewares) => {
                               where: { id: postId }, 
                               attributes: { exclude: ['id', 'createdAt', 'updatedAt', 'location_id', 'user_email']},
                               include: [{
-                                          model: User, 
+                                          model: User,
                                           attributes: ['nickname', 'profile_image']
                                         }, {
                                           model: Location,
+                                          as: 'location',
                                           attributes: { exclude: ['id'] }
                                         }, {
                                           model: Image,
+                                          as: 'images',
                                           attributes: ['url']
                                         }]
                             });

@@ -5,7 +5,7 @@ const middlewares = {};
 middlewares.renewToken = (req, res, next) => {
     if (!req.decoded) return next();
 
-    const restDays = (exp * 1000 - Date.now()) / (1000 * 60 * 60 * 24);
+    const restDays = (req.decoded.exp * 1000 - Date.now()) / (1000 * 60 * 60 * 24);
     if (restDays > 1) return next();
 
     const secret = req.app.get('jwtSecret');

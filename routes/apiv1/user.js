@@ -47,7 +47,9 @@ module.exports = (models, middlewares) => {
   router.get('/profile-content', async (req, res, next) => {
     try {
       const userId = req.query.id;
-      const isMyProfile = req.decoded.id === userId;
+      let isMyProfile = false;
+      
+      if (req.decoded) isMyProfile = req.decoded.id === userId;
 
       const user = await User.findOne({
         where: { id: userId },

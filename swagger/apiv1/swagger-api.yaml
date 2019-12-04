@@ -13,6 +13,7 @@ paths:
       tags:
       - "user"
       summary: "user 정보 업데이트"
+      description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
       prodeces:
       - "application/json"
       parameters:
@@ -34,6 +35,7 @@ paths:
       tags:
       - "user"
       summary: "user 정보 보내기"
+      description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
       prodeces:
       - "application/json"
       responses:
@@ -63,6 +65,7 @@ paths:
       tags:
       - "user"
       summary: "user의 개인 페이지에서 보여질 profile content info"
+      description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n"
       prodeces:
       - "application/json"
       parameters:
@@ -84,6 +87,7 @@ paths:
       tags:
         - "user"
       summary: "follow 요청"
+      description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
       prodeces:
       - "application/json"
       parameters:
@@ -104,6 +108,7 @@ paths:
       tags:
         - "user"
       summary: "follow 취소"
+      description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
       prodeces:
       - "application/json"
       parameters:
@@ -125,6 +130,7 @@ paths:
       tags:
         - "post"
       summary: "post 등록"
+      description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
       prodeces:
       - "application/json"
       parameters:
@@ -201,7 +207,7 @@ paths:
       tags:
       - "post"
       summary: "delete post"
-      description: "post delete"
+      description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
       produces:
       - "application/json"
       parameters:

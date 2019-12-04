@@ -50,7 +50,7 @@ module.exports = (models, controller, middlewares) => {
       const postAttributes = ['id', 'description', 'title_companion', 'title_activity'];
       const include = [{
                         model: User,
-                        attributes: ['profile_image', 'nickname']
+                        attributes: ['id', 'profile_image', 'nickname']
                       }, {
                         model: Location,
                         as: 'location',

@@ -15,6 +15,7 @@ module.exports = {
         return paginatedData.rows.reduce((accumulator, currentValue) => {
             accumulator.posts.push({
                 postId: currentValue.id,
+                writerId: currentValue.user.id,
                 writerImageURL: currentValue.user.profile_image,
                 writerNickname: currentValue.user.nickname,
                 representativePostImageURL: currentValue.images[0].url,

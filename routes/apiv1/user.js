@@ -48,6 +48,7 @@ module.exports = (models, middlewares) => {
     try {
       const userId = req.query.id;
       let isMyProfile = false;
+      let isFollowing = false;
       
       if (req.decoded) isMyProfile = req.decoded.id === userId;
 
@@ -67,9 +68,11 @@ module.exports = (models, middlewares) => {
         group: ['posts.id', 'followers.id', 'followings.id']
       });
 
-      const isFollowing = user.followers.filter(
-        user => user.id === req.decoded.id
-      ).length !== 0;
+      if(req.decoded) {
+        isFollowing = user.followers.filter(
+          user => user.id === req.decoded.id
+        ).length !== 0;
+      }
 
       const sendingData = {
         isMyProfile,

@@ -56,19 +56,24 @@ module.exports = (models, middlewares) => {
         attributes: ['nickname', 'description', 'profile_image'],
         include: [
           { model: Post,
-            attributes: ['id']
+            attributes: ['id'],
           }, {
             association: 'followers',
-            attributes: ['id']
+            attributes: ['id'],
           }, {
             association: 'followings',
-            attributes: ['id']
+            attributes: ['id'],
           }],
         group: ['posts.id', 'followers.id', 'followings.id']
       });
 
+      const isFollowing = user.followers.filter(
+        user => user.id === req.decoded.id
+      ).length !== 0;
+
       const sendingData = {
         isMyProfile,
+        isFollowing,
         "nickname": user.nickname,
         "totalPost": user.posts.length,
         "totalFollower": user.followers.length,
@@ -76,7 +81,7 @@ module.exports = (models, middlewares) => {
         "introduction": user.description,
         "profileImage": user.profile_image
       }
-      
+
       return res.json(sendingData);
     } catch(error) {
       return next(error);

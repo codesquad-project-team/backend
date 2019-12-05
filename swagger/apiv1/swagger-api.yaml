@@ -498,6 +498,8 @@ definitions:
   profileContent:
     type: "object"
     properties:
+      isFollowing:
+        type: "boolean"
       isMyProfile:
         type: "boolean"
       nickname:

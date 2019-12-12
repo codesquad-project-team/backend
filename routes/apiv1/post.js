@@ -99,6 +99,39 @@ module.exports = (models, controller, middlewares) => {
     }
   });
 
+  router.put('/:id', isLoggedIn, async (req, res, next) => {
+    const { location, post } = req.body;
+    const { id } = req.params;
+    try {
+      if (location) {
+        const locationResult = await Location.findOrCreate({
+          where: {
+            latitude: location.latitude,
+            longitude: location.longitude,
+            address: location.address
+          }
+        });
+        post.location_id = locationResult[0].id;
+      }
+
+      if (post.images) {
+        post.images.map((image) => image.post_id = id);
+        await Image.destroy({
+          where: {
+            post_id: id
+          }
+        });
+        
+        await Image.bulkCreate(post.images);
+      }
+
+      await Post.update(post, { where: { id } });
+      res.send();
+    } catch (error) {
+      return next(error);
+    }
+  });
+
   router.delete('/:id', isLoggedIn, async (req, res, next) => {
     const userId = req.decoded.id;
     const postId = req.params.id;
@@ -112,7 +145,7 @@ module.exports = (models, controller, middlewares) => {
         },
         individualHooks: true
       });
-      if (result) return next(createError(400));
+      if (!result) return next(createError(400));
       res.send();
     } catch (error) {
       return next(error)

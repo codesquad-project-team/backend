@@ -203,6 +203,29 @@ paths:
           description: "Bad Request.\npost id가 없다."
         404:
           description: "Not found.\n해당 post id의 post가 없다."
+    put:
+      tags:
+      - "post"
+      summary: "update post"
+      description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**\n**업데이트할 정보만 담아서 요청할것**"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "post-info"
+        description: "업데이트할 포스트 정보"
+        require: true
+        schema:
+          $ref: "#/definitions/uploadingPost"
+      responses:
+        200:
+          description: "Success"
+        400:
+          description: "Bad Request.\npost id가 없다."
+        401:
+          description: "unauthorized"
+        500:
+          description: "internal server error"
     delete:
       tags:
       - "post"
@@ -218,8 +241,6 @@ paths:
       responses:
         200:
           description: "Success"
-          schema:
-            type: "number"
         400:
           description: "Bad Request.\npost id가 없다."
         401:

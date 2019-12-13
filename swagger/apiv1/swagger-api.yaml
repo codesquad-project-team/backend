@@ -436,11 +436,11 @@ definitions:
       post:
         type: "object"
         properties:
-          title_location:
+          titleLocation:
             type: "string"
-          title_companion:
+          titleCompanion:
             type: "string"
-          title_activity:
+          titleActivity:
             type: "string"
           description:
             type: "string"
@@ -451,7 +451,7 @@ definitions:
               properties:
                 url:
                   type: "string"
-                is_representative:
+                isRepresentative:
                   type: "boolean"
   fullPostInfo:
     type: "object"
@@ -597,7 +597,7 @@ definitions:
         type: "string"
       phone:
         type: "string"
-      profile_image:
+      profileImage:
         type: "string"
       description:
         type: "string"

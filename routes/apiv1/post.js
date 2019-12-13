@@ -15,13 +15,13 @@ module.exports = (models, controller, middlewares) => {
       
       const perPage = 20;
       const paginator = new Paginator({ model: Post, perPage });
-      const attributes = ['id','title_companion','title_activity'];
+      const attributes = ['id','titleCompanion','titleActivity'];
       const include = [{
                         model : User,
-                        attributes : ['profile_image'] 
+                        attributes : ['profileImage'] 
                       }];
       const where = { 
-                      location_id : Sequelize.literal(`location_id = (SELECT location_id FROM posts WHERE id = ${postId})`),
+                      locationId : Sequelize.literal(`locationId = (SELECT locationId FROM posts WHERE id = ${postId})`),
                       id : { [Sequelize.Op.ne] : postId }
                     };
       const paginatedData = await paginator.paginate({ page, attributes, include, where });
@@ -45,12 +45,12 @@ module.exports = (models, controller, middlewares) => {
       const paginator = new Paginator({ model: Post, perPage });
       const where = {};
       if(req.query.writerid) {
-        where.writer_id = req.query.writerid;
+        where.writerId = req.query.writerid;
       }
-      const postAttributes = ['id', 'description', 'title_companion', 'title_activity'];
+      const postAttributes = ['id', 'description', 'titleCompanion', 'titleActivity'];
       const include = [{
                         model: User,
-                        attributes: ['id', 'profile_image', 'nickname']
+                        attributes: ['id', 'profileImage', 'nickname']
                       }, {
                         model: Location,
                         as: 'location',
@@ -58,7 +58,7 @@ module.exports = (models, controller, middlewares) => {
                       }, {
                         model: Image,
                         as: 'images',
-                        where: { is_representative: true },
+                        where: { isRepresentative: true },
                         attributes: ['url']
                       }];
       const order = ['id'];
@@ -85,8 +85,8 @@ module.exports = (models, controller, middlewares) => {
           address: location.address
         }
       });
-      post.writer_id = req.decoded.id;
-      post.location_id = locationResult[0].id;
+      post.writerId = req.decoded.id;
+      post.locationId = locationResult[0].id;
   
       const postResult = await Post.create(post, {
         include: [{
@@ -111,14 +111,14 @@ module.exports = (models, controller, middlewares) => {
             address: location.address
           }
         });
-        post.location_id = locationResult[0].id;
+        post.locationId = locationResult[0].id;
       }
 
       if (post.images) {
-        post.images.map((image) => image.post_id = id);
+        post.images.map((image) => image.postId = id);
         await Image.destroy({
           where: {
-            post_id: id
+            postId: id
           }
         });
         
@@ -141,7 +141,7 @@ module.exports = (models, controller, middlewares) => {
       const result = await Post.destroy({
         where: {
           id: postId,
-          writer_id: userId
+          writerId: userId
         },
         individualHooks: true
       });
@@ -160,10 +160,10 @@ module.exports = (models, controller, middlewares) => {
   
       const post = await Post.findOne({
                               where: { id: postId }, 
-                              attributes: { exclude: ['id', 'createdAt', 'updatedAt', 'location_id', 'user_email']},
+                              attributes: { exclude: ['id', 'createdAt', 'updatedAt', 'locationId', 'user_email']},
                               include: [{
                                           model: User,
-                                          attributes: ['nickname', 'profile_image']
+                                          attributes: ['nickname', 'profileImage']
                                         }, {
                                           model: Location,
                                           as: 'location',
@@ -179,12 +179,12 @@ module.exports = (models, controller, middlewares) => {
       
       const postInfo = {
         "titlePlace": post.location.name,
-        "titleCompanion": post.title_companion,
-        "titleActivity": post.title_activity,
+        "titleCompanion": post.titleCompanion,
+        "titleActivity": post.titleActivity,
         "description": post.description,
         "postImageURLs": [],
         "writerNickname": post.user.nickname,
-        "writerImageURL": post.user.profile_image,
+        "writerImageURL": post.user.profileImage,
         "locationLatitude": parseFloat(post.location.latitude),
         "locationLongitude": parseFloat(post.location.longitude),
         "locationAddress": post.location.address,

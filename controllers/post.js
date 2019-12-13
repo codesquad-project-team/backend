@@ -2,9 +2,9 @@ module.exports = {
     parseRelatedData: (paginatedData) => {
         return paginatedData.rows.reduce((accumulator, currentValue) => {
             accumulator.posts.push({
-                profileImageURL: currentValue.user.profile_image,
-                titleCompanion: currentValue.title_companion,
-                titleActivity: currentValue.title_activity,
+                profileImageURL: currentValue.user.profileImage,
+                titleCompanion: currentValue.titleCompanion,
+                titleActivity: currentValue.titleActivity,
                 postId: currentValue.id,
             });
             return accumulator;
@@ -16,12 +16,12 @@ module.exports = {
             accumulator.posts.push({
                 postId: currentValue.id,
                 writerId: currentValue.user.id,
-                writerImageURL: currentValue.user.profile_image,
+                writerImageURL: currentValue.user.profileImage,
                 writerNickname: currentValue.user.nickname,
                 representativePostImageURL: currentValue.images[0].url,
                 titlePlace: currentValue.location.name,
-                titleCompanion: currentValue.title_companion,
-                titleActivity: currentValue.title_activity,
+                titleCompanion: currentValue.titleCompanion,
+                titleActivity: currentValue.titleActivity,
                 description: currentValue.description
             });
             return accumulator;

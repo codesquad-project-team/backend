@@ -4,17 +4,17 @@ const jwt = require('jsonwebtoken')
 module.exports = (models) => {
     const { User } = models;
 
-    auth.findUser = async (provider, provided_id, email, done) => {
+    auth.findUser = async (provider, providedId, email, done) => {
         const user = await User.findOrCreate({
-            where: { provider, provided_id },
-            defaults: { email, provider, provided_id }
+            where: { provider, providedId },
+            defaults: { email, provider, providedId }
         })
 
         if (user.length) {
             return done(null, {
                 id: user[0].dataValues.id,
                 nickname: user[0].dataValues.nickname,
-                profileImage: user[0].dataValues.profile_image,
+                profileImage: user[0].dataValues.profileImage,
                 provider
             });
         }

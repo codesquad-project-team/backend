@@ -32,11 +32,11 @@ module.exports = (models, middlewares) => {
       if(user === null) return next(createError(500));
       const userInfo = {
         id: user.id,
-        profileImage: user.profile_image,
+        profileImage: user.profileImage,
         email: user.email,
         phone: user.phone,
         nickname: user.nickname,
-        description: user.description
+        description: user.introduction
       }
       return res.json(userInfo);
     } catch(error) {
@@ -54,7 +54,7 @@ module.exports = (models, middlewares) => {
 
       const user = await User.findOne({
         where: { id: userId },
-        attributes: ['nickname', 'description', 'profile_image'],
+        attributes: ['nickname', 'introduction', 'profileImage'],
         include: [
           { model: Post,
             attributes: ['id'],
@@ -81,8 +81,8 @@ module.exports = (models, middlewares) => {
         "totalPost": user.posts.length,
         "totalFollower": user.followers.length,
         "totalFollowing": user.followings.length,
-        "introduction": user.description,
-        "profileImage": user.profile_image
+        "introduction": user.introduction,
+        "profileImage": user.profileImage
       }
 
       return res.json(sendingData);

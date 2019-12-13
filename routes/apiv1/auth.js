@@ -94,7 +94,7 @@ module.exports = (models, controller, middlewares) => {
             const userInfo = {
                 id: id,
                 nickname: nickname,
-                profileImage: user.dataValues.profile_image,
+                profileImage: user.dataValues.profileImage,
             }
 
             return controller.login(req, res, userInfo, sevenDays, referer, 'signup')

@@ -71,8 +71,8 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: null,
-          writer_id: userRecord.id,
-          location_id: locationId
+          writerId: userRecord.id,
+          locationId: locationId
         }
         postRecords.push(postRecord);
       }
@@ -86,8 +86,8 @@ module.exports = {
         const url = "https://team-project-s3-bucket.s3.ap-northeast-2.amazonaws.com/post-images/dummy-post-image/myPostImage.png";
         const imageRecord = {
                             url,
-                            post_id: postId,
-                            is_representative: (i === 1),
+                            postId: postId,
+                            isRepresentative: (i === 1),
                             createdAt: new Date(),
                             updatedAt: new Date(),
                             deletedAt: null

@@ -9,15 +9,15 @@ module.exports = {
         unique: true,
         type: Sequelize.INTEGER
       },
-      title_location: {
+      titleLocation: {
         type: Sequelize.STRING(45),
         allowNull: false
       },
-      title_companion: {
+      titleCompanion: {
         type: Sequelize.STRING(45),
         allowNull: false
       },
-      title_activity: {
+      titleActivity: {
         type: Sequelize.STRING(45),
         allowNull: false
       },
@@ -40,7 +40,7 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: null
       },
-      writer_id: {
+      writerId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -50,7 +50,7 @@ module.exports = {
           key: 'id',
         },
       },
-      location_id: {
+      locationId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {

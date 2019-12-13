@@ -18,7 +18,7 @@ db.Post.hasMany(
   db.Image,
   {
     as: "images",
-    foreignKey: 'post_id',
+    foreignKey: 'postId',
     sourceKey: 'id',
     onDelete: 'cascade',
     hooks: true,
@@ -29,7 +29,7 @@ db.Image.belongsTo(
   db.Post,
   {
     as: "post",
-    foreignKey: 'post_id',
+    foreignKey: 'postId',
     targetKey: 'id',
   },
 );
@@ -38,7 +38,7 @@ db.Location.hasMany(
   db.Post,
   {
     as: "posts",
-    foreignKey: 'location_id',
+    foreignKey: 'locationId',
     sourceKey: 'id'
   },
 );
@@ -47,7 +47,7 @@ db.Post.belongsTo(
   db.Location,
   {
     as: "location",
-    foreignKey: 'location_id',
+    foreignKey: 'locationId',
     targetKey: 'id'
   },
 );
@@ -56,7 +56,7 @@ db.User.hasMany(
   db.Post,
   {
     foreignKey : {
-      name: 'writer_id',
+      name: 'writerId',
       allowNull: false
     },
     sourceKey: 'id',
@@ -66,7 +66,7 @@ db.User.hasMany(
 db.Post.belongsTo(
   db.User,
   {
-    foreignKey: 'writer_id',
+    foreignKey: 'writerId',
     targetKey: 'id',
   },
 );
@@ -75,7 +75,7 @@ db.User.belongsToMany(
   db.User,
   {
     as: 'followers',
-    foreignKey: 'following_id',
+    foreignKey: 'followingId',
     through: 'follow',
   },
 );
@@ -84,7 +84,7 @@ db.User.belongsToMany(
   db.User,
   {
     as: 'followings',
-    foreignKey: 'follower_id',
+    foreignKey: 'followerId',
     through: 'follow',
   },
 );

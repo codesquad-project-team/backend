@@ -2,7 +2,7 @@
 module.exports = {
     up: (queryInterface, Sequelize) => {
         return queryInterface.createTable('follows', {
-            follower_id: {
+            followerId: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: {
@@ -12,7 +12,7 @@ module.exports = {
                     key: 'id',
                 }
             },
-            following_id: {
+            followingId: {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: {

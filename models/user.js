@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(64),
       allowNull: true
     },
-    profile_image: {
+    profileImage: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
@@ -28,12 +28,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(45),
       allowNull: false
     },
-    provided_id: {
+    providedId: {
       type: DataTypes.STRING(64),
       allowNull: false
     },
-    description: {
-      type: DataTypes.BLOB,
+    introduction: {
+      type: DataTypes.TEXT,
       allowNull: true
     },
     authority: {

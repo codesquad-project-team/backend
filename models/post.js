@@ -8,15 +8,15 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       type: DataTypes.INTEGER,
     },
-    title_location: {
+    titleLocation: {
       type: DataTypes.STRING(45),
       allowNull: false
     },
-    title_companion: {
+    titleCompanion: {
       type: DataTypes.STRING(45),
       allowNull: false
     },
-    title_activity: {
+    titleActivity: {
       type: DataTypes.STRING(45),
       allowNull: false
     },

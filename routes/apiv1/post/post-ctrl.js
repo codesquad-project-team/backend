@@ -48,7 +48,8 @@ module.exports = (models) => {
         'id',
         'description',
         'companion',
-        'activity'
+        'activity',
+        'place'
       ];
       const include = [
         {

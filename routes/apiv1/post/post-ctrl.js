@@ -89,7 +89,7 @@ module.exports = (models) => {
   
     try {
       const locationResult = await Location.findOrCreate({
-        where: { latitude, longitude, address },
+        where: { name, latitude, longitude, address },
       });
       post.writerId = req.decoded.id;
       post.locationId = locationResult[0].id;

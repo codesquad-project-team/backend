@@ -9,15 +9,15 @@ module.exports = {
         unique: true,
         type: Sequelize.INTEGER
       },
-      titleLocation: {
+      place: {
         type: Sequelize.STRING(45),
         allowNull: false
       },
-      titleCompanion: {
+      companion: {
         type: Sequelize.STRING(45),
         allowNull: false
       },
-      titleActivity: {
+      activity: {
         type: Sequelize.STRING(45),
         allowNull: false
       },

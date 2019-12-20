@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(45),
       allowNull: false,
       defaultValue: 'normal'
-    }
+    },
   }, {
     timestamps: true,
     paranoid: true,

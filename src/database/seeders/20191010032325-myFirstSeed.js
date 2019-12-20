@@ -64,9 +64,9 @@ module.exports = {
 
       for(let locationId = start;  locationId <= end; locationId++) {
         const postRecord = {
-          titleCompanion: (locationId%2 === 0) ? "친구" : "애인",
-          titleLocation: `장소${locationId}`,
-          titleActivity: '맥주' + locationId + '잔 마시기',
+          companion: (locationId%2 === 0) ? "친구" : "애인",
+          place: `장소${locationId}`,
+          activity: '맥주' + locationId + '잔 마시기',
           description: '테스트입니다.',
           createdAt: new Date(),
           updatedAt: new Date(),

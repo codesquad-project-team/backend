@@ -11,25 +11,21 @@ app.set('naverSearchClientId', process.env.NAVER_SEARCH_CLIENT_ID);
 app.set('naverSearchClientSecret', process.env.NAVER_SEARCH_CLIENT_SECRET);
 
 const cors = require('cors');
-const corsOptions = require('./cors');
+const corsOptions = require('./src/cors');
 
 const passport = require('passport');
-const passportConfig = require('./passport');
+const passportConfig = require('./src/passport');
 
 const middlewares = {
-  v1: require('./middlewares')
+  v1: require('./middlewares'),
 }
 
 const models = {
-  v1: require('./models')
-}
-
-const controllers = {
-  v1: require('./controllers')(models.v1)
+  v1: require('./models'),
 }
 
 const apiRouters = {
-  v1: require('./routes/apiv1')(models.v1, controllers.v1, middlewares.v1)
+  v1: require('./routes/apiv1')(models.v1, middlewares.v1),
 }
 
 sequelize.sync();
@@ -42,7 +38,7 @@ app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
-passportConfig(passport, controllers.v1);
+passportConfig(passport, models.v1);
 
 app.use(middlewares.v1.decodeToken);
 app.use(middlewares.v1.renewToken);

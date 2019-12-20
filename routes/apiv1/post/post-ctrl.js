@@ -192,6 +192,7 @@ module.exports = (models) => {
         return accumulator;
       }, []);
       const postInfo = {
+        id: postId,
         place,
         companion,
         activity,

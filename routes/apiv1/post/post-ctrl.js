@@ -85,7 +85,7 @@ module.exports = (models) => {
   
   controller.createPost = async (req, res, next) => {
     const { location, post } = req.body;
-    const { latitude, longitude, address } = location;
+    const { name, latitude, longitude, address } = location;
   
     try {
       const locationResult = await Location.findOrCreate({

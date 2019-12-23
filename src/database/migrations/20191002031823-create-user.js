@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.STRING(64),
         allowNull: true
       },
-      profile_image: {
+      profileImage: {
         type: Sequelize.STRING(255),
         allowNull: true
       },
@@ -30,12 +30,12 @@ module.exports = {
         type: Sequelize.STRING(45),
         allowNull: false
       },
-      provided_id: {
+      providedId: {
         type: Sequelize.STRING(64),
         allowNull: false
       },
-      description: {
-        type: Sequelize.BLOB,
+      introduction: {
+        type: Sequelize.TEXT,
         allowNull: true
       },
       authority: {

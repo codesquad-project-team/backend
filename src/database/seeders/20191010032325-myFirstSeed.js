@@ -8,11 +8,11 @@ module.exports = {
         id: i,
         email: 'gmini.y' + i + '@gmail.com',
         phone: `${i}-1234-1234`,
-        profile_image: 'https://team-project-s3-bucket.s3.ap-northeast-2.amazonaws.com/profile-images/dummyUser%40google.com/myProfile.png',
+        profileImage: 'https://team-project-s3-bucket.s3.ap-northeast-2.amazonaws.com/profile-images/dummyUser%40google.com/myProfile.png',
         nickname: '잉글비' + i,
-        description: '나는 바보 닙니다',
+        introduction: '나는 바보 닙니다',
         provider: `${provider[i%3]}`,
-        provided_id: `${i*11}`,
+        providedId: `${i*11}`,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null
@@ -64,15 +64,15 @@ module.exports = {
 
       for(let locationId = start;  locationId <= end; locationId++) {
         const postRecord = {
-          title_companion: (locationId%2 === 0) ? "친구" : "애인",
-          title_location: `장소${locationId}`,
-          title_activity: '맥주' + locationId + '잔 마시기',
+          companion: (locationId%2 === 0) ? "친구" : "애인",
+          place: `장소${locationId}`,
+          activity: '맥주' + locationId + '잔 마시기',
           description: '테스트입니다.',
           createdAt: new Date(),
           updatedAt: new Date(),
           deletedAt: null,
-          writer_id: userRecord.id,
-          location_id: locationId
+          writerId: userRecord.id,
+          locationId: locationId
         }
         postRecords.push(postRecord);
       }
@@ -86,8 +86,8 @@ module.exports = {
         const url = "https://team-project-s3-bucket.s3.ap-northeast-2.amazonaws.com/post-images/dummy-post-image/myPostImage.png";
         const imageRecord = {
                             url,
-                            post_id: postId,
-                            is_representative: (i === 1),
+                            postId: postId,
+                            isRepresentative: (i === 1),
                             createdAt: new Date(),
                             updatedAt: new Date(),
                             deletedAt: null

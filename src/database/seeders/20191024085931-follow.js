@@ -27,8 +27,8 @@ module.exports = {
     const bulkFollowData = [];
     follow.forEach(element => {
       const record = {
-        follower_id: element[0],
-        following_id: element[1]
+        followerId: element[0],
+        followingId: element[1]
       }
       return bulkFollowData.push(record);
     });

@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull : false
       },
-      post_id: {
+      postId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -23,7 +23,7 @@ module.exports = {
           key: 'id',
         }
       },
-      is_representative: {
+      isRepresentative: {
         type : Sequelize.BOOLEAN,
         default: false,
         allowNull : false

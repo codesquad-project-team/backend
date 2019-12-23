@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       type: DataTypes.INTEGER
     },
-    is_representative: {
+    isRepresentative: {
       type : DataTypes.BOOLEAN,
       default: false,
       allowNull : false

@@ -11,11 +11,11 @@ module.exports = (models) => {
   const { User } = models;
 
   controller.facebookCallback = (req, res, next) => {
-    passport.authenticate('facebook', defineNextProcess)(req, res, next);
+    passport.authenticate('facebook', defineNextProcess(req, res))(req, res, next);
   };
   
   controller.kakaoCallback = (req, res, next) => {
-    passport.authenticate('kakao', defineNextProcess)(req, res, next);
+    passport.authenticate('kakao', defineNextProcess(req, res))(req, res, next);
   };
 
   controller.signup = async (req, res, next) => {
@@ -108,19 +108,20 @@ module.exports = (models) => {
     return res.redirect('http://connectflavor.cf/signup');
   };
 
-  const defineNextProcess = (err, user, info) => {
-    const referer = req.headers.referer || 'http://connectflavor.cf';
-    // 로그인 실패
-    if (!user) return res.redirect(referer);
+  const defineNextProcess = (req, res) => {
+    return (err, user, info) => {
+      const referer = req.headers.referer || 'http://connectflavor.cf';
+      // 로그인 실패
+      if (!user) return res.redirect(referer);
 
-    //nickname 이 없는 경우 => 회원가입
-    if (!user.nickname) {
-        return tempLogin(req, res, user, tempTokenMaxAge, referer);
+      //nickname 이 없는 경우 => 회원가입
+      if (!user.nickname) {
+          return tempLogin(req, res, user, tempTokenMaxAge, referer);
+      }
+
+      //로그인 성공
+      return login(req, res, user, tokenMaxAge, referer)
     }
-
-    //로그인 성공
-    return login(req, res, user, tokenMaxAge, referer)
   }
-
   return controller;
 };

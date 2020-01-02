@@ -9,7 +9,7 @@ const swaggerDefinition = {
     version: '1.0.0', // Version (required)
     description: 'API description', // Description (optional)
   },
-  host: 'temp', // Host (optional)
+  host: 'http://api.connectflavor.cf', // Host (optional)
   basePath: '/v1', // Base path (optional)
 }
 

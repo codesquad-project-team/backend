@@ -85,6 +85,7 @@ module.exports = (models) => {
   
   controller.createPost = async (req, res, next) => {
     const { location, post } = req.body;
+    if ( !location || !post ) return next(createError(400, 'post, location are required'));
     const { name, latitude, longitude, address, link, phone } = location;
   
     try {
@@ -107,8 +108,13 @@ module.exports = (models) => {
   
   controller.updatePost = async (req, res, next) => {
     const { location, post } = req.body;
+
+    if (!(location || post)) return next(createError(400, 'There is no data'));
+
     const { id } = req.params;
+
     if (!id) return next(createError(400, 'postid is required'));
+
     try {
       if (location) {
         const { latitude, longitude, address } = location;

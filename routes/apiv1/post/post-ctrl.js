@@ -85,11 +85,12 @@ module.exports = (models) => {
   
   controller.createPost = async (req, res, next) => {
     const { location, post } = req.body;
-    const { name, latitude, longitude, address } = location;
+    const { name, latitude, longitude, address, link, phone } = location;
   
     try {
       const locationResult = await Location.findOrCreate({
-        where: { name, latitude, longitude, address },
+        where: { latitude, longitude, address },
+        defaults: { name, link, phone }
       });
       post.writerId = req.decoded.id;
       post.locationId = locationResult[0].id;
@@ -112,7 +113,8 @@ module.exports = (models) => {
       if (location) {
         const { latitude, longitude, address } = location;
         const locationResult = await Location.findOrCreate({
-          where: { latitude, longitude, address }
+          where: { latitude, longitude, address },
+          defaults: { name, link, phone }
         });
         post.locationId = locationResult[0].id;
       }

@@ -25,6 +25,8 @@
  *   responses:
  *    200:
  *     description: "Success"
+ *    400:
+ *      description: "post나 location 정보가 없다"
  *    401:
  *     description: "unauthorized, 로그인 안한 회원"
  *    500:
@@ -103,7 +105,7 @@
  *    200:
  *     description: "Success"
  *    400:
- *     description: "Bad Request.\npost id가 없다."
+ *     description: "post id가 없거나 data 가 없다."
  *    401:
  *     description: "unauthorized"
  *    500:

@@ -12,10 +12,16 @@
  *   tags:
  *   - "post"
  *   summary: "post 등록"
- *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
+ *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**"
  *   prodeces:
  *   - "application/json"
  *   parameters:
+ *   - in: "cookie"
+ *     name: "token"
+ *     description: "json web token"
+ *     required: true
+ *     schema:
+ *      type: "string"
  *   - in: "body"
  *     name: "post-info"
  *     description: "등록할 포스트 정보"
@@ -91,10 +97,16 @@
  *   tags:
  *   - "post"
  *   summary: "update post"
- *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**\n**업데이트할 정보만 담아서 요청할것**"
+ *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**업데이트할 정보만 담아서 요청할것**"
  *   produces:
  *   - "application/json"
  *   parameters:
+ *   - in: "cookie"
+ *     name: "token"
+ *     description: "json web token"
+ *     required: true
+ *     schema:
+ *      type: "string"
  *   - in: "body"
  *     name: "post-info"
  *     description: "업데이트할 포스트 정보"
@@ -114,10 +126,16 @@
  *   tags:
  *   - "post"
  *   summary: "delete post"
- *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
+ *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**"
  *   produces:
  *   - "application/json"
  *   parameters:
+ *   - in: "cookie"
+ *     name: "token"
+ *     description: "json web token"
+ *     required: true
+ *     schema:
+ *      type: "string"
  *   - in: "query"
  *     name: "id"
  *     description: "post id"

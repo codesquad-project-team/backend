@@ -12,10 +12,16 @@
  *   tags:
  *   - "user"
  *   summary: "user 정보 업데이트"
- *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
+ *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**"
  *   prodeces:
  *   - "application/json"
  *   parameters:
+ *   - in: "cookie"
+ *     name: "token"
+ *     description: "json web token"
+ *     required: true
+ *     schema:
+ *      type: "string"
  *   - in: "body"
  *     name: "userInfo"
  *     description: "update 할 유저 정보"
@@ -34,9 +40,16 @@
  *   tags:
  *   - "user"
  *   summary: "user 정보 보내기"
- *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
+ *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**"
  *   prodeces:
  *   - "application/json"
+ *   parameters:
+ *   - in: "cookie"
+ *     name: "token"
+ *     description: "json web token"
+ *     required: true
+ *     schema:
+ *      type: "string"
  *   responses:
  *    200:
  *     description: "Success"
@@ -86,10 +99,16 @@
  *   tags:
  *   - "user"
  *   summary: "follow 요청"
- *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
+ *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n"
  *   prodeces:
  *    - "application/json"
  *   parameters:
+ *   - in: "cookie"
+ *     name: "token"
+ *     description: "json web token"
+ *     required: true
+ *     schema:
+ *      type: "string"
  *   - in: "query"
  *     name: "user id"
  *     description: "follow 할 user id"
@@ -107,10 +126,16 @@
  *   tags:
  *   - "user"
  *   summary: "follow 취소"
- *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
+ *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**"
  *   prodeces:
  *   - "application/json"
  *   parameters:
+ *   - in: "cookie"
+ *     name: "token"
+ *     description: "json web token"
+ *     required: true
+ *     schema:
+ *      type: "string"
  *   - in: "query"
  *     name: "user id"
  *     description: "follow 취소 할 user id"

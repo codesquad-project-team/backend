@@ -72,7 +72,7 @@
  *     description: "Bad Request. JWT 가 유요하지 않음"
  *    500:
  *     description: "Internal Server Error"
- * /user/profile-content?id={user id}:
+ * /user/profile-content:
  *  get:
  *   tags:
  *   - "user"
@@ -109,7 +109,7 @@
  *     required: true
  *     schema:
  *      type: "string"
- *   - in: "query"
+ *   - in: "path"
  *     name: "user id"
  *     description: "follow 할 user id"
  *     required: true

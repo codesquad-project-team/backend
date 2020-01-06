@@ -37,7 +37,6 @@
  *     description: "unauthorized, 로그인 안한 회원"
  *    500:
  *     description: "Internal Server Error"
- * /post?page={page number}&writerid={writer id}:
  *  get:
  *   tags:
  *   - "post"
@@ -50,7 +49,7 @@
  *     description: "page number minimum 1"
  *     required: true
  *   - in: "query"
- *     name: "writer id"
+ *     name: "writerid"
  *     description: "특정 유저가 작성한 Post 만 가져오고 싶을 때 writer id 를 입력"
  *     required: false
  *   responses:
@@ -71,7 +70,7 @@
  *     description: "Bad Request.\n잘못된 page number"
  *    500:
  *     description: "Internal Server Error"
- * /post/{post id}:
+ * /post/{postid}:
  *  get:
  *   tags:
  *   - "post"
@@ -80,8 +79,8 @@
  *   produces:
  *   - "application/json"
  *   parameters:
- *   - in: "query"
- *     name: "id"
+ *   - in: "path"
+ *     name: "postid"
  *     description: "post id"
  *     required: true
  *   responses:
@@ -149,7 +148,7 @@
  *     description: "unauthorized"
  *    500:
  *     description: "internal server error"
- * /post/related-to?postid={post id}&page={page number}:
+ * /post/related-to:
  *  get:
  *   tags:
  *   - "post"
@@ -159,7 +158,7 @@
  *   - "application/json"
  *   parameters:
  *   - in: "query"
- *     name: "post-id"
+ *     name: "postid"
  *     description: "post id"
  *     required: true
  *   - in: "query"

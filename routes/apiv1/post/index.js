@@ -238,7 +238,12 @@
  *    images:
  *     type: "array"
  *     items:
- *      type: "string"
+ *      type: "object"
+ *      properties:
+ *        isRepresentative:
+ *          type: "boolean"
+ *        url:
+ *          type: "string"
  *    location:
  *     type: "object"
  *     properties:

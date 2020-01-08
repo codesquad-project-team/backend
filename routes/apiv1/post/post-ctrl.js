@@ -187,7 +187,7 @@ module.exports = (models) => {
           }, {
             model: Image,
             as: 'images',
-            attributes: ['url']
+            attributes: ['url', 'isRepresentative']
         }]
       });
       if(post === null) return next(createError(404, 'no Post'));
@@ -195,8 +195,10 @@ module.exports = (models) => {
       const { name, latitude, longitude, address, link, phone } = post.location;
       const { id, nickname, profileImage } = post.user;
       const images = post.images.reduce((accumulator, currentValue) => {
-        accumulator.push(currentValue.url);
-
+        const { url, isRepresentative } = currentValue;
+        const image = { url, isRepresentative };
+        accumulator.push(image);
+        
         return accumulator;
       }, []);
       const postInfo = {

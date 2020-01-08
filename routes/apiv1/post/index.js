@@ -12,10 +12,16 @@
  *   tags:
  *   - "post"
  *   summary: "post 등록"
- *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
+ *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**"
  *   prodeces:
  *   - "application/json"
  *   parameters:
+ *   - in: "cookie"
+ *     name: "token"
+ *     description: "json web token"
+ *     required: true
+ *     schema:
+ *      type: "string"
  *   - in: "body"
  *     name: "post-info"
  *     description: "등록할 포스트 정보"
@@ -25,11 +31,12 @@
  *   responses:
  *    200:
  *     description: "Success"
+ *    400:
+ *      description: "post나 location 정보가 없다"
  *    401:
  *     description: "unauthorized, 로그인 안한 회원"
  *    500:
  *     description: "Internal Server Error"
- * /post?page={page number}&writerid={writer id}:
  *  get:
  *   tags:
  *   - "post"
@@ -42,7 +49,7 @@
  *     description: "page number minimum 1"
  *     required: true
  *   - in: "query"
- *     name: "writer id"
+ *     name: "writerid"
  *     description: "특정 유저가 작성한 Post 만 가져오고 싶을 때 writer id 를 입력"
  *     required: false
  *   responses:
@@ -63,7 +70,7 @@
  *     description: "Bad Request.\n잘못된 page number"
  *    500:
  *     description: "Internal Server Error"
- * /post/{post id}:
+ * /post/{postid}:
  *  get:
  *   tags:
  *   - "post"
@@ -72,8 +79,8 @@
  *   produces:
  *   - "application/json"
  *   parameters:
- *   - in: "query"
- *     name: "id"
+ *   - in: "path"
+ *     name: "postid"
  *     description: "post id"
  *     required: true
  *   responses:
@@ -89,10 +96,16 @@
  *   tags:
  *   - "post"
  *   summary: "update post"
- *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**\n**업데이트할 정보만 담아서 요청할것**"
+ *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**업데이트할 정보만 담아서 요청할것**"
  *   produces:
  *   - "application/json"
  *   parameters:
+ *   - in: "cookie"
+ *     name: "token"
+ *     description: "json web token"
+ *     required: true
+ *     schema:
+ *      type: "string"
  *   - in: "body"
  *     name: "post-info"
  *     description: "업데이트할 포스트 정보"
@@ -103,7 +116,7 @@
  *    200:
  *     description: "Success"
  *    400:
- *     description: "Bad Request.\npost id가 없다."
+ *     description: "post id가 없거나 data 가 없다."
  *    401:
  *     description: "unauthorized"
  *    500:
@@ -112,10 +125,16 @@
  *   tags:
  *   - "post"
  *   summary: "delete post"
- *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n**token 필요**"
+ *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**"
  *   produces:
  *   - "application/json"
  *   parameters:
+ *   - in: "cookie"
+ *     name: "token"
+ *     description: "json web token"
+ *     required: true
+ *     schema:
+ *      type: "string"
  *   - in: "query"
  *     name: "id"
  *     description: "post id"
@@ -129,7 +148,7 @@
  *     description: "unauthorized"
  *    500:
  *     description: "internal server error"
- * /post/related-to?postid={post id}&page={page number}:
+ * /post/related-to:
  *  get:
  *   tags:
  *   - "post"
@@ -139,7 +158,7 @@
  *   - "application/json"
  *   parameters:
  *   - in: "query"
- *     name: "post-id"
+ *     name: "postid"
  *     description: "post id"
  *     required: true
  *   - in: "query"
@@ -219,7 +238,12 @@
  *    images:
  *     type: "array"
  *     items:
- *      type: "string"
+ *      type: "object"
+ *      properties:
+ *        isRepresentative:
+ *          type: "boolean"
+ *        url:
+ *          type: "string"
  *    location:
  *     type: "object"
  *     properties:

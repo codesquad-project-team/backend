@@ -85,11 +85,13 @@ module.exports = (models) => {
   
   controller.createPost = async (req, res, next) => {
     const { location, post } = req.body;
-    const { name, latitude, longitude, address } = location;
+    if ( !location || !post ) return next(createError(400, 'post, location are required'));
+    const { name, latitude, longitude, address, link, phone } = location;
   
     try {
       const locationResult = await Location.findOrCreate({
-        where: { name, latitude, longitude, address },
+        where: { latitude, longitude, address },
+        defaults: { name, link, phone }
       });
       post.writerId = req.decoded.id;
       post.locationId = locationResult[0].id;
@@ -106,13 +108,19 @@ module.exports = (models) => {
   
   controller.updatePost = async (req, res, next) => {
     const { location, post } = req.body;
+
+    if (!(location || post)) return next(createError(400, 'There is no data'));
+
     const { id } = req.params;
+
     if (!id) return next(createError(400, 'postid is required'));
+
     try {
       if (location) {
         const { latitude, longitude, address } = location;
         const locationResult = await Location.findOrCreate({
-          where: { latitude, longitude, address }
+          where: { latitude, longitude, address },
+          defaults: { name, link, phone }
         });
         post.locationId = locationResult[0].id;
       }
@@ -179,7 +187,7 @@ module.exports = (models) => {
           }, {
             model: Image,
             as: 'images',
-            attributes: ['url']
+            attributes: ['url', 'isRepresentative']
         }]
       });
       if(post === null) return next(createError(404, 'no Post'));
@@ -187,8 +195,10 @@ module.exports = (models) => {
       const { name, latitude, longitude, address, link, phone } = post.location;
       const { id, nickname, profileImage } = post.user;
       const images = post.images.reduce((accumulator, currentValue) => {
-        accumulator.push(currentValue.url);
-
+        const { url, isRepresentative } = currentValue;
+        const image = { url, isRepresentative };
+        accumulator.push(image);
+        
         return accumulator;
       }, []);
       const postInfo = {

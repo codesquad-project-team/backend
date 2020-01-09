@@ -6,7 +6,9 @@ module.exports = (models) => {
 
   controller.updateUserProfile = async (req, res, next) => {
     const { id } = req.decoded;
+
     if (!id) return next(createError(401));
+
     const userInfo = req.body;
     const userTableAttributes = Object.keys(User.tableAttributes);
     const updatingInfoAttributes = Object.keys(userInfo);
@@ -16,7 +18,28 @@ module.exports = (models) => {
     if (unexpectedAttributes.length) return next(createError(400, "invalid attributes"));
     
     try {
-      await User.update(userInfo, { where: { id }});    
+      // returning option으로 update 후의 객체를 받아오려고 했으나 postgre에서만 지원한다고함.
+      await User.update(userInfo, {
+        where: { id },
+      });
+
+      const user = await User.findOne({ where: { id } });
+
+      // 프로필 수정 후 수정된 정보로 token 재발급
+      // token 발급 미들웨어를 만드는건 어떨까.
+      const jwt = require('jsonwebtoken');
+      const sevenDays = 1000*60*60*24*7;
+      const tokenMaxAge = sevenDays;
+      const secret = req.app.get('jwtSecret');
+      const tokenInfo = {
+          id: user.id,
+          nickname : user.nickname,
+          profileImage : user.profileImage
+      }
+      const token = jwt.sign(tokenInfo, secret, { expiresIn: `${tokenMaxAge}` });
+
+      res.cookie('token', token, { path: '/', httpOnly: true, maxAge: tokenMaxAge });
+    
       return res.send();
     } catch (error) {
       return next(error);

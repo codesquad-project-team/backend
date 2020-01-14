@@ -28,8 +28,7 @@ module.exports = (models) => {
       // 프로필 수정 후 수정된 정보로 token 재발급
       // token 발급 미들웨어를 만드는건 어떨까.
       const jwt = require('jsonwebtoken');
-      const sevenDays = 1000*60*60*24*7;
-      const tokenMaxAge = sevenDays;
+      const tokenMaxAge = 1000*60*60*24*7;
       const secret = req.app.get('jwtSecret');
       const tokenInfo = {
           id: user.id,

@@ -107,9 +107,10 @@ module.exports = (models) => {
   };
   
   controller.updatePost = async (req, res, next) => {
-    const { location, post } = req.body;
+    if (!(req.body.location || req.body.post)) return next(createError(400, 'There is no data'));
 
-    if (!(location || post)) return next(createError(400, 'There is no data'));
+    const { location } = req.body;
+    const post = req.body.post || {};
 
     const { id } = req.params;
 
@@ -117,7 +118,7 @@ module.exports = (models) => {
 
     try {
       if (location) {
-        const { latitude, longitude, address } = location;
+        const { name, latitude, longitude, address, link, phone } = location;
         const locationResult = await Location.findOrCreate({
           where: { name, address },
           defaults: { latitude, longitude, link, phone }

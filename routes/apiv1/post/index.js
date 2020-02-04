@@ -227,22 +227,27 @@
  *  fullPostInfo:
  *   type: "object"
  *   properties:
- *    place:
- *     type: "string"
- *    companion:
- *     type: "string"
- *    activity:
- *     type: "string"
- *    description:
- *     type: "string"
- *    images:
- *     type: "array"
- *     items:
- *      type: "object"
- *      properties:
- *        isRepresentative:
+ *    post:
+ *     type: "object"
+ *     properties:
+ *      id:
+ *       type: "number"
+ *      place:
+ *       type: "string"
+ *      companion:
+ *       type: "string"
+ *      activity:
+ *       type: "string"
+ *      description:
+ *       type: "string"
+ *      images:
+ *       type: "array"
+ *       items:
+ *        type: "object"
+ *        properties:
+ *         isRepresentative:
  *          type: "boolean"
- *        url:
+ *         url:
  *          type: "string"
  *    location:
  *     type: "object"

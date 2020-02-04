@@ -203,12 +203,14 @@ module.exports = (models) => {
         return accumulator;
       }, []);
       const postInfo = {
-        id: postId,
-        place,
-        companion,
-        activity,
-        images,
-        description,
+        post: {
+          id: postId,
+          place,
+          companion,
+          activity,
+          images,
+          description,
+        },
         location: {
           name,
           latitude: parseFloat(latitude),

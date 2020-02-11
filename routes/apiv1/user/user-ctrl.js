@@ -90,8 +90,10 @@ module.exports = (models) => {
             }],
           group: ['posts.id', 'followers.id', 'followings.id']
         });
+      
+      if (!user) return res.status(204).send("no user");
 
-      if(req.decoded) {
+      if (req.decoded) {
         isFollowing = user.followers.filter(
           follower => follower.id === req.decoded.id
         ).length !== 0;

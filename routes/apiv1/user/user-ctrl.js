@@ -64,15 +64,12 @@ module.exports = (models) => {
   controller.getProfileContent = async (req, res, next) => {
     try {
       const userId = parseInt(req.query.id);
-      let isMyProfile = false;
       let isFollowing = false;
       
-      if (req.decoded) isMyProfile = req.decoded.id === userId;
-
-      const { nickname, posts, followers, followings, introduction, profileImage } =
+      const { id, nickname, posts, followers, followings, introduction, profileImage } =
         await User.findOne({
           where: { id: userId },
-          attributes: ['nickname', 'introduction', 'profileImage'],
+          attributes: ['nickname', 'introduction', 'profileImage', 'id'],
           include: [
             { model: Post,
               attributes: ['id'],
@@ -93,7 +90,7 @@ module.exports = (models) => {
       }
 
       const sendingData = {
-        isMyProfile,
+        id,
         isFollowing,
         nickname,
         introduction,

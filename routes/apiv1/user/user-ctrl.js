@@ -63,21 +63,21 @@ module.exports = (models) => {
 
   controller.getProfileContent = async (req, res, next) => {
     try {
-      const { id: idInQuery, nickname: nicknameInQuery } = req.query;
+      const { id, nickname } = req.query;
       
-      if (!idInQuery && !nicknameInQuery) {
+      if (!id && !nickname) {
         return next(createError(400, "id or nickname required"));
       }
 
       // id, nickname 둘 다 있으면 id로 찾는다.
-      const where = idInQuery ? { id: idInQuery } : { nickname: nicknameInQuery };
+      const where = id ? { id } : { nickname };
 
       let isFollowing = false;
       
-      const { id, nickname, posts, followers, followings, introduction, profileImage } =
+      const user =
         await User.findOne({
           where,
-          attributes: ['nickname', 'introduction', 'profileImage', 'id'],
+          attributes: ['id', 'nickname', 'introduction', 'profileImage'],
           include: [
             { model: Post,
               attributes: ['id'],
@@ -92,20 +92,20 @@ module.exports = (models) => {
         });
 
       if(req.decoded) {
-        isFollowing = followers.filter(
-          user => user.id === req.decoded.id
+        isFollowing = user.followers.filter(
+          follower => follower.id === req.decoded.id
         ).length !== 0;
       }
 
       const sendingData = {
-        id,
+        id: user.id,
         isFollowing,
-        nickname,
-        introduction,
-        profileImage,
-        totalPosts: posts.length,
-        totalFollowers: followers.length,
-        totalFollowings: followings.length,
+        nickname: user.nickname,
+        introduction: user.introduction,
+        profileImage: user.profileImage,
+        totalPosts: user.posts.length,
+        totalFollowers: user.followers.length,
+        totalFollowings: user.followings.length,
       };
 
       return res.json(sendingData);

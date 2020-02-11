@@ -31,6 +31,11 @@
  *   responses:
  *    200:
  *     description: "Success"
+ *     schema:
+ *      type: "object"
+ *      properties:
+ *       id:
+ *        type: "number"
  *    400:
  *      description: "post나 location 정보가 없다"
  *    401:

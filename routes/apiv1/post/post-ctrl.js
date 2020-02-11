@@ -100,7 +100,7 @@ module.exports = (models) => {
         include: [{ model: Image, as: 'images' }],
       });
   
-      res.json(postResult);
+      res.json({ id: postResult.id });
     } catch (error) {
       return next(error)
     }

@@ -46,6 +46,7 @@ module.exports = (models) => {
   
       const postAttributes = [
         'id',
+        'createdAt',
         'description',
         'companion',
         'activity',
@@ -66,7 +67,7 @@ module.exports = (models) => {
           attributes: ['url']
         }
       ];
-      const order = ['id'];
+      const order = [['createdAt', 'DESC']];
       const paginatedData = await paginator.paginate({
         page,
         attributes: postAttributes,

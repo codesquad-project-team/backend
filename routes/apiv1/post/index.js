@@ -45,7 +45,7 @@
  *  get:
  *   tags:
  *   - "post"
- *   summary: "각 페이지당 최대 20개의 포스트를 전달한다."
+ *   summary: "각 페이지당 20개의 포스트를 전달한다.\n 포스트 작성 시간의 역순으로 전달한다."
  *   prodeces:
  *    - "application/json"
  *   parameters:

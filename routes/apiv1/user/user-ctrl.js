@@ -63,12 +63,20 @@ module.exports = (models) => {
 
   controller.getProfileContent = async (req, res, next) => {
     try {
-      const userId = parseInt(req.query.id);
+      const { id: idInQuery, nickname: nicknameInQuery } = req.query;
+      
+      if (!idInQuery && !nicknameInQuery) {
+        return next(createError(400, "id or nickname required"));
+      }
+
+      // id, nickname 둘 다 있으면 id로 찾는다.
+      const where = idInQuery ? { id: idInQuery } : { nickname: nicknameInQuery };
+
       let isFollowing = false;
       
       const { id, nickname, posts, followers, followings, introduction, profileImage } =
         await User.findOne({
-          where: { id: userId },
+          where,
           attributes: ['nickname', 'introduction', 'profileImage', 'id'],
           include: [
             { model: Post,

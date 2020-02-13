@@ -69,7 +69,7 @@
  *       introduction:
  *        type: "string"
  *    400:
- *     description: "Bad Request. JWT 가 유요하지 않음"
+ *     description: "Bad Request. JWT 가 유효하지 않음"
  *    500:
  *     description: "Internal Server Error"
  * /user/profile-content:
@@ -77,7 +77,7 @@
  *   tags:
  *   - "user"
  *   summary: "user의 개인 페이지에서 보여질 profile content info"
- *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n"
+ *   description: "**fetch 에 {credentials: 'include'} 옵션 필요**\n id, nickname 둘 중 하나가ㄴ query에 있어야 한다."
  *   prodeces:
  *   - "application/json"
  *   parameters:
@@ -85,13 +85,19 @@
  *     name: "id"
  *     description: "가져오고자 하는 유저의 id"
  *     required: true
+ *   - in: "query"
+ *     name: "nickname"
+ *     description: "가져오고자 하는 유저의 nickname"
+ *     required: true
  *   responses:
  *    200:
  *     description: "Success"
  *     schema:
  *      $ref: "#definitions/profileContent"
+ *    204:
+ *     description: "해당 id 및 nickname의 user가 없다"
  *    400:
- *     description: "Bad Request\n id 를 가진 user가 없음"
+ *     description: "id와 nickname 둘 다 없다."
  *    500:
  *     description: "Internal Server Error"
  * /user/follow/{userid}:

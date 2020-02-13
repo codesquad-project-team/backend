@@ -63,16 +63,21 @@ module.exports = (models) => {
 
   controller.getProfileContent = async (req, res, next) => {
     try {
-      const userId = parseInt(req.query.id);
-      let isMyProfile = false;
+      const { id, nickname } = req.query;
+      
+      if (!id && !nickname) {
+        return next(createError(400, "id or nickname required"));
+      }
+
+      // id, nickname 둘 다 있으면 id로 찾는다.
+      const where = id ? { id } : { nickname };
+
       let isFollowing = false;
       
-      if (req.decoded) isMyProfile = req.decoded.id === userId;
-
-      const { nickname, posts, followers, followings, introduction, profileImage } =
+      const user =
         await User.findOne({
-          where: { id: userId },
-          attributes: ['nickname', 'introduction', 'profileImage'],
+          where,
+          attributes: ['id', 'nickname', 'introduction', 'profileImage'],
           include: [
             { model: Post,
               attributes: ['id'],
@@ -85,22 +90,24 @@ module.exports = (models) => {
             }],
           group: ['posts.id', 'followers.id', 'followings.id']
         });
+      
+      if (!user) return res.status(204).send("no user");
 
-      if(req.decoded) {
-        isFollowing = followers.filter(
-          user => user.id === req.decoded.id
+      if (req.decoded) {
+        isFollowing = user.followers.filter(
+          follower => follower.id === req.decoded.id
         ).length !== 0;
       }
 
       const sendingData = {
-        isMyProfile,
+        id: user.id,
         isFollowing,
-        nickname,
-        introduction,
-        profileImage,
-        totalPosts: posts.length,
-        totalFollowers: followers.length,
-        totalFollowings: followings.length,
+        nickname: user.nickname,
+        introduction: user.introduction,
+        profileImage: user.profileImage,
+        totalPosts: user.posts.length,
+        totalFollowers: user.followers.length,
+        totalFollowings: user.followings.length,
       };
 
       return res.json(sendingData);

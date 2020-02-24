@@ -35,6 +35,10 @@
  *     description: "unauthorized"
  *    400:
  *     description: "bad request, params 확인"
+ */
+
+/**
+ * @swagger
  * /user/myinfo:
  *  get:
  *   tags:
@@ -72,6 +76,10 @@
  *     description: "Bad Request. JWT 가 유효하지 않음"
  *    500:
  *     description: "Internal Server Error"
+ */
+
+/**
+ * @swagger
  * /user/profile-content:
  *  get:
  *   tags:
@@ -100,6 +108,10 @@
  *     description: "id와 nickname 둘 다 없다."
  *    500:
  *     description: "Internal Server Error"
+ */
+
+/**
+ * @swagger
  * /user/follow/{userid}:
  *  post:
  *   tags:
@@ -155,6 +167,46 @@
  *     description: "유효하지 않은 토큰"
  *    500:
  *     description: "Internal Server Error"
+ */
+
+/**
+ * @swagger
+ * /user/{userid}/followers:
+ *  get:
+ *   tags:
+ *   - "user"
+ *   summary: "userId의 follower 목록 가져오기"
+ *   prodeces:
+ *    - "application/json"
+ *   parameters:
+ *   - in: "path"
+ *     name: "userId"
+ *     description: "follower 목록을 조회할 user id"
+ *     required: true
+ *   responses:
+ *     200:
+ *      description: "Success"
+ *      schema:
+ *       type: "array"
+ *       items:
+ *        type: "object"
+ *        properties:
+ *         id:
+ *          type: "number"
+ *         nickname:
+ *          type: "string"
+ *         profileImage:
+ *          type: "string"
+ *     400:
+ *      description: "Bad Request\n user id 가 없거나 잘못 되었음"
+ *     401:
+ *      description: "유효하지 않은 토큰"
+ *     500:
+ *      description: "Internal Server Error"
+ */
+
+/**
+ * @swagger
  * /user/checkNicknameDuplication:
  *  post:
  *   tags:

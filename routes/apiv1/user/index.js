@@ -35,6 +35,10 @@
  *     description: "unauthorized"
  *    400:
  *     description: "bad request, params 확인"
+ */
+
+/**
+ * @swagger
  * /user/myinfo:
  *  get:
  *   tags:
@@ -72,6 +76,10 @@
  *     description: "Bad Request. JWT 가 유효하지 않음"
  *    500:
  *     description: "Internal Server Error"
+ */
+
+/**
+ * @swagger
  * /user/profile-content:
  *  get:
  *   tags:
@@ -100,6 +108,10 @@
  *     description: "id와 nickname 둘 다 없다."
  *    500:
  *     description: "Internal Server Error"
+ */
+
+/**
+ * @swagger
  * /user/follow/{userid}:
  *  post:
  *   tags:
@@ -155,6 +167,50 @@
  *     description: "유효하지 않은 토큰"
  *    500:
  *     description: "Internal Server Error"
+ */
+
+/**
+ * @swagger
+ * /user/{id}/relationship/{type}:
+ *  get:
+ *   tags:
+ *   - "user"
+ *   summary: "id를 가진 유저의 followers, followings 목록을 가져온다."
+ *   prodeces:
+ *    - "application/json"
+ *   parameters:
+ *   - in: "path"
+ *     name: "id"
+ *     description: "type 관계를 가지는 유저의 목록을 조회할 유저의 id"
+ *     required: true
+ *   - in: "path"
+ *     name: "type"
+ *     description: "조회할 관계 타입.\nfollower와 following 가능."
+ *     required: true
+ *   responses:
+ *     200:
+ *      description: "Success"
+ *      schema:
+ *       type: "array"
+ *       items:
+ *        type: "object"
+ *        properties:
+ *         id:
+ *          type: "number"
+ *         nickname:
+ *          type: "string"
+ *         profileImage:
+ *          type: "string"
+ *     400:
+ *      description: "Bad Request\n user id 가 없거나 잘못 되었음\n type이 없음"
+ *     401:
+ *      description: "유효하지 않은 토큰"
+ *     500:
+ *      description: "Internal Server Error"
+ */
+
+/**
+ * @swagger
  * /user/checkNicknameDuplication:
  *  post:
  *   tags:
@@ -227,6 +283,7 @@ module.exports = (models, middlewares) => {
     addFollow,
     removeFollow,
     checkNicknameDuplication,
+    getRelationship
   } = require('./user-ctrl')(models);
   
   router.put('/profile', isLoggedIn, updateUserProfile);
@@ -235,6 +292,7 @@ module.exports = (models, middlewares) => {
   router.post('/follow/:id', addFollow);
   router.delete('/follow/:id', removeFollow);
   router.post('/checkNicknameDuplication', checkNicknameDuplication);
+  router.get('/:id/relationship/:type', getRelationship)
 
   return router;
 }

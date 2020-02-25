@@ -164,5 +164,37 @@ module.exports = (models) => {
     }
   };
 
+  controller.getRelationship = async (req, res, next) => {
+    const { id, type } = req.params;
+    
+    if(!id || !type) return next(createError(400, 'user id, type required'));
+
+    try {
+      const user = await User.findOne({ where: { id } });
+
+      if (!user) return next(createError(400, 'no user'));
+
+      let users;
+      switch (type) {
+        case 'follower':
+          users = await user.getFollowers({ attributes: ['id', 'nickname', 'profileImage'] });
+          break;
+        case 'following':
+          users = await user.getFollowings({ attributes: ['id', 'nickname', 'profileImage'] });
+          break;
+        default:
+          return next(createError(400, 'type should be followers or followings'));
+      }
+      
+      const responseData = users.map(({ id, nickname, profileImage }) => {
+        return { id, nickname, profileImage }
+      });
+
+      return res.json(responseData);
+    } catch(error) {
+      return next(error);
+    }
+  };
+
   return controller;
 };

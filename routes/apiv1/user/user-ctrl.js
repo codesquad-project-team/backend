@@ -37,7 +37,7 @@ module.exports = (models) => {
       }
       const token = jwt.sign(tokenInfo, secret, { expiresIn: `${tokenMaxAge}` });
 
-      res.cookie('token', token, { path: '/', httpOnly: true, maxAge: tokenMaxAge });
+      res.cookie('token', token, { path: '/', httpOnly: true, maxAge: tokenMaxAge, sameSite: "None" });
     
       return res.send();
     } catch (error) {

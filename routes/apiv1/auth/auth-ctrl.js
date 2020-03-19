@@ -86,7 +86,7 @@ module.exports = (models) => {
         profileImage : user.profileImage
     }
     const token = jwt.sign(userInfo, secret, { expiresIn: `${maxAge}` });
-    res.cookie('token', token, { path: '/', httpOnly: true, maxAge: maxAge });
+    res.cookie('token', token, { path: '/', httpOnly: true, maxAge: maxAge, sameSite: "None" });
   
     if (previousAction === 'signup') {
         return res.json({ referer });
@@ -102,7 +102,7 @@ module.exports = (models) => {
         provider : user.provider, 
         referer 
     }, secret, { expiresIn: `${maxAge}` });
-    res.cookie('tempToken', tempToken, { path: '/', httpOnly: true, maxAge: maxAge });
+    res.cookie('tempToken', tempToken, { path: '/', httpOnly: true, maxAge: maxAge, sameSite: "None" });
 
     //redirect : 닉네임 입력 페이지로
     return res.redirect('http://connectflavor.cf/signup');

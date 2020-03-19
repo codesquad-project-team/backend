@@ -17,7 +17,7 @@ middlewares.renewToken = (req, res, next) => {
         profileImage: req.decoded.profileImage
     }, secret, { expiresIn: `${sevenDays}` });
 
-    res.cookie('token', token, { path: '/', httpOnly: true, maxAge: sevenDays });
+    res.cookie('token', token, { path: '/', httpOnly: true, maxAge: sevenDays, sameSite: "None" });
 
     return next();
 }
